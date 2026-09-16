@@ -1,0 +1,5 @@
+DuckDuckGo HTML	https://html.duckduckgo.com	2026-09-15 23:01:05
+Wikipedia (Română)	https://ro.wikipedia.org	2026-09-15 23:01:05
+Wikipedia (English)	https://en.wikipedia.org	2026-09-15 23:01:05
+Java Documentation	https://docs.oracle.com/en/java/	2026-09-15 23:01:05
+Example Domain	https://example.com	2026-09-15 23:01:05

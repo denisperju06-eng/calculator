@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorul 1 — Paradigma Scriptică (JavaScript)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Antet Principal & Comutator Temă -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <h1>Paradigma Scriptică — Laboratorul 1</h1>
+        <p>Implementarea completă a celor 20 de cerințe (Sarcina 1 + Sarcina 2) în HTML &amp; JS nativ</p>
+      </div>
+      <div class="header-actions">
+        <nav class="nav-pills">
+          <a href="#sarcina1" class="nav-link">Sarcina 1 (1-10)</a>
+          <a href="#sarcina2" class="nav-link">Sarcina 2 (1-10)</a>
+        </nav>
+        <!-- Buton Dark Mode comun (Sarcina 2.6 & 2.7) -->
+        <button id="theme-toggle-btn" class="btn btn-secondary" title="Comută modul întunecat">
+          <span id="theme-icon">🌙</span> <span id="theme-text">Mod Întunecat</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ====================================================================
+         SARCINA 1: Cerințe de bază (Nota 5) - 10 puncte
+         ==================================================================== -->
+    <section id="sarcina1">
+      <div class="section-title-wrap">
+        <h2 class="section-title">
+          <span>Sarcina 1</span>
+          <span class="section-badge">Nota 5 (10 exerciții)</span>
+        </h2>
+        <span class="text-muted">Câte 0.5 puncte pentru fiecare cerință</span>
+      </div>
+
+      <div class="tasks-grid">
+
+        <!-- 1.1: prompt() Suma a două numere -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">1.1 Suma cu prompt()</h3>
+            <span class="task-number">S1.1</span>
+          </div>
+          <p class="card-description">Citește două numere de la utilizator folosind <code>prompt()</code> și afișează suma lor.</p>
+          <div class="card-body">
+            <button id="btn-prompt-sum" class="btn btn-primary">
+              Deschide prompt() pentru 2 numere
+            </button>
+            <div id="res-prompt-sum" class="result-box">
+              Apasă butonul de mai sus pentru a citi numerele.
+            </div>
+          </div>
+        </article>
+
+        <!-- 1.2: Factorialul unui număr -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">1.2 Calcul Factorial</h3>
+            <span class="task-number">S1.2</span>
+          </div>
+          <p class="card-description">Calculează factorialul unui număr introdus de utilizator (n!).</p>
+          <div class="card-body">
+            <div class="input-row">
+              <input type="number" id="factorial-input" min="0" max="170" placeholder="Ex: 5" value="5">
+              <button id="btn-factorial" class="btn btn-primary">Calculează</button>
+            </div>
+            <div id="res-factorial" class="result-box">
+              Factorialul va fi afișat aici.
+            </div>
+          </div>
+        </article>
+
+        <!-- 1.3: Numărare vocale -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">1.3 Numărare Vocale</h3>
+            <span class="task-number">S1.3</span>
+          </div>
+          <p class="card-description">Numără câte vocale conține un text introdus de la tastatură (inclusiv diacritice: a, e, i, o, u, ă, â, î).</p>
+          <div class="card-body">
+            <div class="form-group">
+              <input type="text" id="vowels-input" placeholder="Introdu textul aici..." value="JavaScript este un limbaj scriptic minunat!">
+            </div>
+            <button id="btn-count-vowels" class="btn btn-primary">Numără vocalele</button>
+            <div id="res-vowels" class="result-box">
+              Numărul de vocale va apărea aici.
+            </div>
+          </div>
+        </article>
+
+        <!-- 1.4: Schimbare culoare fundal la culoare aleatoare -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">1.4 Culoare Fundal Aleatoare</h3>
+            <span class="task-number">S1.4</span>
+          </div>
+          <p class="card-description">Un buton care schimbă culoarea fundalului paginii la o culoare generată aleator.</p>
+          <div class="card-body">
+            <div class="btn-group">
+              <button id="btn-random-bg" class="btn btn-primary">🎨 Schimbă fundalul</button>
+              <button id="btn-reset-bg" class="btn btn-outline">↺ Resetează</button>
+            </div>
+            <div id="res-bg-color" class="result-box">
+              Culoare actuală fundal: implicită
+            </div>
+          </div>
+        </article>
+
+        <!-- 1.5: Cronometru automat (la încărcare) -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">1.5 Cronometru Automat</h3>
+            <span class="task-number">S1.5</span>
+          </div>
+          <p class="card-description">Pornește automat la încărcarea paginii și afișează secundele trecute într-un element HTML.</p>
+          <div class="card-body">
+            <div class="digital-clock" id="auto-timer-display">0 secunde</div>
+            <div class="result-box">
+              ⏱ Secunde scurse de la deschiderea paginii: <strong id="auto-timer-count" style="margin-left: 5px;">0</strong>
+            </div>
+          </div>
+        </article>
+
+        <!-- 1.6: Adăugare în listă <ul> -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">1.6 Adăugare în Listă &lt;ul&gt;</h3>
+            <span class="task-number">S1.6</span>
+          </div>
+          <p class="card-description">Creează o listă &lt;ul&gt; și un buton care, la clic, adaugă un element nou cu textul introdus.</p>
+          <div class="card-body">
+            <div class="input-row">
+              <input type="text" id="dynamic-list-input" placeholder="Nume element nou...">
+              <button id="btn-add-to-list" class="btn btn-primary">Adaugă</button>
+            </div>
+            <ul id="dynamic-ul" class="custom-list">
+              <li>Primul element prestabilit</li>
+              <li>Al doilea element prestabilit</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- 1.7: Ascunde / Afișează paragraf -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">1.7 Ascunde / Afișează Paragraf</h3>
+            <span class="task-number">S1.7</span>
+          </div>
+          <p class="card-description">Script care ascunde sau afișează un paragraf la fiecare apăsare de buton.</p>
+          <div class="card-body">
+            <button id="btn-toggle-paragraph" class="btn btn-primary">Ascunde paragraful</button>
+            <p id="target-paragraph" class="result-box" style="display: block; border-style: solid;">
+              📄 Acesta este paragraful vizat! Poate fi ascuns și reapariționat prin comutarea proprietății <code>display</code>.
+            </p>
+          </div>
+        </article>
+
+        <!-- 1.8: Hover schimbă culoarea textului -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">1.8 Hover Schimbare Culoare</h3>
+            <span class="task-number">S1.8</span>
+          </div>
+          <p class="card-description">La trecerea mouse-ului peste un element, schimbă culoarea textului; la ieșire, revine la culoarea inițială.</p>
+          <div class="card-body">
+            <div id="hover-target-box" class="hover-box">
+              👉 Plasează cursorul mouse-ului aici!
+            </div>
+            <div id="hover-status" class="result-box">
+              Stare: În afara elementului (culoare inițială)
+            </div>
+          </div>
+        </article>
+
+        <!-- 1.9: Slider de imagini simplu (3 secunde) -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">1.9 Slider Imagini (3 sec)</h3>
+            <span class="task-number">S1.9</span>
+          </div>
+          <p class="card-description">Slider simplu care schimbă automat imaginea la fiecare 3 secunde (cu opțiuni manuale).</p>
+          <div class="card-body">
+            <div class="slider-container">
+              <img id="slider-image" class="slider-img" src="" alt="Slide">
+              <div class="slider-controls">
+                <button id="btn-slider-prev" class="slider-btn" title="Anterior">&#10094;</button>
+                <div id="slider-dots" class="slider-dots"></div>
+                <button id="btn-slider-next" class="slider-btn" title="Următor">&#10095;</button>
+              </div>
+            </div>
+            <div id="slider-info" class="result-box" style="justify-content: space-between;">
+              <span id="slider-caption">Imagine 1 din 4</span>
+              <span class="text-muted" style="font-size: 0.75rem;">Interval: 3s</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 1.10: Calculator mic (+, -, *, /) -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">1.10 Calculator Simplu</h3>
+            <span class="task-number">S1.10</span>
+          </div>
+          <p class="card-description">Calculator cu butoane pentru operațiile +, -, ×, ÷ și ecran pentru rezultat.</p>
+          <div class="card-body">
+            <div class="calc-wrapper">
+              <div id="calc-display" class="calc-display">0</div>
+              <div class="calc-buttons">
+                <button class="calc-btn clear" data-action="clear">C</button>
+                <button class="calc-btn" data-action="backspace">⌫</button>
+                <button class="calc-btn op" data-action="operator" data-val="/">÷</button>
+                <button class="calc-btn op" data-action="operator" data-val="*">×</button>
+
+                <button class="calc-btn" data-action="number" data-val="7">7</button>
+                <button class="calc-btn" data-action="number" data-val="8">8</button>
+                <button class="calc-btn" data-action="number" data-val="9">9</button>
+                <button class="calc-btn op" data-action="operator" data-val="-">-</button>
+
+                <button class="calc-btn" data-action="number" data-val="4">4</button>
+                <button class="calc-btn" data-action="number" data-val="5">5</button>
+                <button class="calc-btn" data-action="number" data-val="6">6</button>
+                <button class="calc-btn op" data-action="operator" data-val="+">+</button>
+
+                <button class="calc-btn" data-action="number" data-val="1">1</button>
+                <button class="calc-btn" data-action="number" data-val="2">2</button>
+                <button class="calc-btn" data-action="number" data-val="3">3</button>
+                <button class="calc-btn" data-action="decimal" data-val=".">.</button>
+
+                <button class="calc-btn" data-action="number" data-val="0" style="grid-column: span 2;">0</button>
+                <button class="calc-btn eq" data-action="equals">=</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         SARCINA 2: Cerințe avansate (Nota 10) - 10 puncte
+         ==================================================================== -->
+    <section id="sarcina2">
+      <div class="section-title-wrap">
+        <h2 class="section-title">
+          <span>Sarcina 2</span>
+          <span class="section-badge" style="background-color: #8b5cf6;">Cerințe Avansate (10 exerciții)</span>
+        </h2>
+        <span class="text-muted">Câte 0.5 puncte pentru fiecare cerință</span>
+      </div>
+
+      <div class="tasks-grid">
+
+        <!-- 2.1: Ghicește numărul 1-100 -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">2.1 Ghicește Numărul (1 - 100)</h3>
+            <span class="task-number">S2.1</span>
+          </div>
+          <p class="card-description">Generează un număr secret între 1 și 100 și afișează indiciul "mai mic" sau "mai mare".</p>
+          <div class="card-body">
+            <div class="input-row">
+              <input type="number" id="guess-input" min="1" max="100" placeholder="Număr între 1 și 100">
+              <button id="btn-guess" class="btn btn-primary">Ghicește</button>
+            </div>
+            <div class="btn-group">
+              <button id="btn-reset-game" class="btn btn-outline btn-sm">Joc Nou</button>
+            </div>
+            <div id="res-guess" class="result-box">
+              Începe prin a introduce un număr și apasă „Ghicește”.
+            </div>
+          </div>
+        </article>
+
+        <!-- 2.2: Contor de click-uri în timp real -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">2.2 Contor Click-uri în Timp Real</h3>
+            <span class="task-number">S2.2</span>
+          </div>
+          <p class="card-description">Numără câte click-uri s-au făcut pe un buton și afișează numărul în timp real.</p>
+          <div class="card-body">
+            <div class="big-counter" id="click-counter-display">0</div>
+            <div class="btn-group" style="justify-content: center;">
+              <button id="btn-click-me" class="btn btn-primary" style="flex: 1;">👆 Apasă-mă!</button>
+              <button id="btn-click-reset" class="btn btn-secondary">Resetează</button>
+            </div>
+            <div class="result-box">
+              Fiecare clic actualizează imediat contorul.
+            </div>
+          </div>
+        </article>
+
+        <!-- 2.3 & 2.4: Sistem de notițe cu buton de ștergere -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">2.3 &amp; 2.4 Sistem de Notițe cu Ștergere</h3>
+            <span class="task-number">S2.3-4</span>
+          </div>
+          <p class="card-description">Utilizatorul scrie o notă într-un input, apasă „Adaugă”, iar nota apare cu buton de ștergere dedicat.</p>
+          <div class="card-body">
+            <div class="input-row">
+              <input type="text" id="note-input" placeholder="Scrie o notă rapidă...">
+              <button id="btn-add-note" class="btn btn-primary">Adaugă</button>
+            </div>
+            <ul id="notes-list" class="custom-list" style="min-height: 120px;">
+              <!-- Notițele se generează dinamic aici -->
+            </ul>
+          </div>
+        </article>
+
+        <!-- 2.5: Cronometru cu Start, Pauză, Reset (setInterval & clearInterval) -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">2.5 Cronometru (Start, Pauză, Reset)</h3>
+            <span class="task-number">S2.5</span>
+          </div>
+          <p class="card-description">Cronometru complet implementat cu <code>setInterval()</code> și <code>clearInterval()</code>.</p>
+          <div class="card-body">
+            <div class="digital-clock" id="stopwatch-display">00:00:00</div>
+            <div class="btn-group" style="justify-content: center;">
+              <button id="btn-timer-start" class="btn btn-success">▶ Start</button>
+              <button id="btn-timer-pause" class="btn btn-secondary">⏸ Pauză</button>
+              <button id="btn-timer-reset" class="btn btn-danger">⏹ Reset</button>
+            </div>
+            <div id="stopwatch-status" class="result-box">
+              Stare: Oprit
+            </div>
+          </div>
+        </article>
+
+        <!-- 2.6 & 2.7: Mod Întunecat cu Salvare în localStorage -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">2.6 &amp; 2.7 Mod Întunecat &amp; localStorage</h3>
+            <span class="task-number">S2.6-7</span>
+          </div>
+          <p class="card-description">Schimbă simultan culorile fundalului și textului pentru întreaga pagină și salvează automat în <code>localStorage</code>.</p>
+          <div class="card-body">
+            <div class="btn-group">
+              <button id="btn-toggle-dark-card" class="btn btn-primary">
+                Comută Tema (Dark / Light)
+              </button>
+              <button id="btn-clear-theme" class="btn btn-outline btn-sm">
+                Curăță Preferința
+              </button>
+            </div>
+            <div id="theme-status-box" class="result-box">
+              Tema curentă: Luminoasă (salvată în localStorage)
+            </div>
+          </div>
+        </article>
+
+        <!-- 2.8: Listă de sarcini (To-Do List) cu localStorage -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">2.8 To-Do List (cu localStorage)</h3>
+            <span class="task-number">S2.8</span>
+          </div>
+          <p class="card-description">Adaugă, bifează (marchează ca terminată) și șterge sarcini, cu persistență în <code>localStorage</code>.</p>
+          <div class="card-body">
+            <div class="input-row">
+              <input type="text" id="todo-input" placeholder="Ce sarcină vrei să adaugi?">
+              <button id="btn-add-todo" class="btn btn-primary">Adaugă</button>
+            </div>
+            <div id="todo-stats" style="font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+              <span id="todo-count">0 sarcini</span>
+              <button id="btn-clear-all-todos" class="btn btn-outline btn-sm" style="padding: 0.15rem 0.4rem;">Șterge tot</button>
+            </div>
+            <div id="todo-list-container" class="custom-list" style="min-height: 120px;">
+              <!-- Elemente To-Do generate dinamic -->
+            </div>
+          </div>
+        </article>
+
+        <!-- 2.9: Vremea via fetch() de la un API extern -->
+        <article class="task-card">
+          <div class="card-header">
+            <h3 class="card-title">2.9 Date Meteo via fetch() API</h3>
+            <span class="task-number">S2.9</span>
+          </div>
+          <p class="card-description">Preia date meteo în timp real de la un API public (Open-Meteo) folosind <code>fetch()</code>.</p>
+          <div class="card-body">
+            <div class="input-row">
+              <select id="weather-city-select">
+                <option value="47.0105,28.8638,Chișinău">Chișinău (Moldova)</option>
+                <option value="44.4323,26.1063,București">București (România)</option>
+                <option value="47.1585,27.6014,Iași">Iași (România)</option>
+                <option value="46.7712,23.6236,Cluj-Napoca">Cluj-Napoca (România)</option>
+                <option value="51.5074,-0.1278,Londra">Londra (Marea Britanie)</option>
+                <option value="48.8566,2.3522,Paris">Paris (Franța)</option>
+              </select>
+              <button id="btn-fetch-weather" class="btn btn-primary">Încarcă</button>
+            </div>
+            <div id="weather-result-container">
+              <div class="result-box">
+                Apasă „Încarcă” pentru a obține vremea curentă.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2.10: Funcție asincronă citire fișier JSON local și afișare tabel -->
+        <article class="task-card" style="grid-column: 1 / -1;">
+          <div class="card-header">
+            <h3 class="card-title">2.10 Citire Asincronă JSON Local &amp; Afișare Tabel HTML</h3>
+            <span class="task-number">S2.10</span>
+          </div>
+          <p class="card-description">
+            Funcție asincronă (<code>async/await</code>) care citește fișierul <code>data.json</code> local și generează dinamic un tabel HTML cu datele studenților și notelor.
+          </p>
+          <div class="card-body">
+            <div class="btn-group">
+              <button id="btn-load-json" class="btn btn-primary">
+                📊 Încarcă data.json (fetch async/await)
+              </button>
+              <label class="btn btn-outline" style="cursor: pointer;" title="În caz că deschizi fișierul prin dublu-click direct file:// și browserul blochează CORS local">
+                📁 Selectează manual JSON
+                <input type="file" id="json-file-input" accept=".json" style="display: none;">
+              </label>
+            </div>
+            <div id="json-feedback" class="result-box">
+              Apasă butonul pentru a citi și afișa conținutul fișierului <code>data.json</code> într-un tabel HTML.
+            </div>
+            <div id="json-table-container" class="table-responsive" style="display: none;">
+              <!-- Tabelul HTML generat dinamic -->
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

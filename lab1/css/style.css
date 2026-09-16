@@ -1,0 +1,604 @@
+/* ===================================================================
+   STILURI CALCULATOR DE BUZUNAR - WINDOWS 11 FLUENT / MODERN DESIGN
+   =================================================================== */
+
+:root {
+    --bg-app: #f3f3f3;
+    --bg-window: rgba(255, 255, 255, 0.85);
+    --border-color: rgba(0, 0, 0, 0.08);
+    --text-primary: #1b1b1b;
+    --text-secondary: #5c5c5c;
+    --text-muted: #8a8a8a;
+    
+    /* Butoane */
+    --btn-digit-bg: #ffffff;
+    --btn-digit-hover: #f9f9f9;
+    --btn-digit-active: #f0f0f0;
+    
+    --btn-func-bg: #f8f8f8;
+    --btn-func-hover: #eaeaea;
+    --btn-func-active: #dfdfdf;
+    
+    --btn-op-bg: #f4f4f4;
+    --btn-op-hover: #e5e5e5;
+    
+    --accent-blue: #0067c0;
+    --accent-blue-hover: #1879cd;
+    --accent-blue-active: #005fb8;
+    
+    --error-bg: #fde7e9;
+    --error-border: #f8b4b8;
+    --error-text: #b01020;
+    
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    
+    --shadow-window: 0 16px 36px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-btn: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+body {
+    background: linear-gradient(135deg, #e4ecf7 0%, #d8e3f0 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: var(--text-primary);
+}
+
+/* Fereastra aplicației */
+.app-container {
+    width: 100%;
+    max-width: 440px;
+    background: var(--bg-window);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: var(--shadow-window);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Header fereastră */
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.4);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.window-controls {
+    display: flex;
+    gap: 7px;
+}
+
+.control-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.control-dot.close { background-color: #ff5f56; }
+.control-dot.minimize { background-color: #ffbd2e; }
+.control-dot.maximize { background-color: #27c93f; }
+
+.app-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-secondary);
+}
+
+.calc-icon {
+    font-size: 1rem;
+}
+
+.header-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    font-size: 0.95rem;
+    padding: 4px 6px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: background-color 0.15s;
+}
+
+.icon-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Navigare moduri (Tabs) */
+.mode-navigation {
+    display: flex;
+    background: rgba(0, 0, 0, 0.02);
+    padding: 4px;
+    gap: 4px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.mode-tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 7px 4px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.mode-tab:hover {
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--text-primary);
+}
+
+.mode-tab.active {
+    background: #ffffff;
+    color: var(--accent-blue);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Banner de eroare */
+.error-banner {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background-color: var(--error-bg);
+    border-bottom: 1px solid var(--error-border);
+    color: var(--error-text);
+    font-size: 0.82rem;
+    font-weight: 500;
+    animation: slideDown 0.2s ease-out;
+}
+
+.error-banner.visible {
+    display: flex;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ecran Afișaj (Display) */
+.display-section {
+    padding: 14px 18px 10px 18px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 110px;
+    background: rgba(255, 255, 255, 0.25);
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+
+.display-meta {
+    position: absolute;
+    top: 8px;
+    left: 14px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.angle-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: background 0.15s;
+}
+
+.angle-badge:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--accent-blue);
+}
+
+.memory-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    opacity: 0.4;
+}
+
+.memory-badge.active {
+    opacity: 1;
+    color: var(--accent-blue);
+    background: rgba(0, 103, 192, 0.1);
+}
+
+.display-secondary {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    min-height: 1.2rem;
+    margin-bottom: 4px;
+    word-break: break-all;
+}
+
+.display-primary {
+    font-size: 3.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.1;
+    word-break: break-all;
+    transition: font-size 0.1s ease;
+}
+
+/* Panou baze (Programator) */
+.programmer-base-panel {
+    display: none;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.02);
+    border-bottom: 1px solid var(--border-color);
+    padding: 6px 16px;
+}
+
+.keypad-programmer.active ~ .programmer-base-panel,
+.mode-tab[data-mode="programmer"].active ~ .app-container .programmer-base-panel,
+body:has(.keypad-programmer.active) .programmer-base-panel {
+    display: flex;
+}
+
+.base-row {
+    display: flex;
+    align-items: center;
+    padding: 4px 6px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.12s;
+    font-size: 0.82rem;
+}
+
+.base-row:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.base-row.active {
+    background: rgba(0, 103, 192, 0.08);
+    font-weight: 600;
+}
+
+.base-row.active .base-label {
+    color: var(--accent-blue);
+}
+
+.base-label {
+    width: 44px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.base-value {
+    flex: 1;
+    text-align: right;
+    font-family: 'Consolas', 'Courier New', monospace;
+    letter-spacing: 0.5px;
+    word-break: break-all;
+}
+
+/* Bară Memorie (MC, MR, M+, M-, MS) */
+.memory-bar {
+    display: flex;
+    padding: 4px 10px;
+    gap: 4px;
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.mem-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 6px 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.12s ease;
+}
+
+.mem-btn:not(:disabled):hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--text-primary);
+}
+
+.mem-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* Tastaturi (Keypads) */
+.keypad {
+    display: none;
+    padding: 8px;
+    gap: 4px;
+}
+
+.keypad.active {
+    display: grid;
+}
+
+/* Mod Științific: 5 coloane */
+.keypad-scientific {
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 40px;
+}
+
+/* Mod Standard: 4 coloane */
+.keypad-standard {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 52px;
+}
+
+/* Mod Programator: 5 coloane */
+.keypad-programmer {
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 42px;
+}
+
+.programmer-bottom-bar {
+    grid-column: span 5;
+    display: flex;
+    margin-top: 2px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+/* Butoane Calculator */
+.btn {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.12s ease, transform 0.05s ease, box-shadow 0.12s ease;
+    box-shadow: var(--shadow-btn);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn-digit {
+    background-color: var(--btn-digit-bg);
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.btn-digit:hover {
+    background-color: var(--btn-digit-hover);
+}
+
+.btn-func {
+    background-color: var(--btn-func-bg);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.btn-func:hover {
+    background-color: var(--btn-func-hover);
+    color: var(--text-primary);
+}
+
+.btn-op {
+    background-color: var(--btn-op-bg);
+    color: var(--text-primary);
+    font-size: 1.15rem;
+}
+
+.btn-op:hover {
+    background-color: var(--btn-op-hover);
+}
+
+.btn-hex {
+    background-color: #f6f8fa;
+    font-weight: 700;
+    color: #2b4c7e;
+}
+
+.btn-hex:disabled,
+.btn-programmer-digit:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    background-color: #eaeaea;
+    color: #999;
+}
+
+.btn-danger {
+    background-color: #fff0f0;
+    color: #d11a2a;
+    font-weight: 600;
+}
+
+.btn-danger:hover {
+    background-color: #ffe0e0;
+}
+
+.btn-equals {
+    background-color: var(--accent-blue);
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.btn-equals:hover {
+    background-color: var(--accent-blue-hover);
+}
+
+.btn-equals:active {
+    background-color: var(--accent-blue-active);
+}
+
+.btn-span-2 {
+    grid-column: span 2;
+}
+
+/* Efect de undă (Ripple) */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: rippleAnim 0.4s linear;
+    background-color: rgba(0, 0, 0, 0.08);
+    pointer-events: none;
+}
+
+.btn-equals .ripple {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+@keyframes rippleAnim {
+    to {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+/* Modale (Istoric & Info) */
+.history-modal, .info-modal {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    flex-direction: column;
+    padding: 16px;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.history-modal.active, .info-modal.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.history-header, .info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.clear-hist-btn, .close-info-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+}
+
+.clear-hist-btn:hover, .close-info-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.history-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.history-item {
+    text-align: right;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.hist-expr {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.hist-res {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.empty-history {
+    text-align: center;
+    color: var(--text-muted);
+    margin-top: 40px;
+    font-size: 0.9rem;
+}
+
+.info-content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.info-body {
+    padding-top: 14px;
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+.info-body ul {
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-body code {
+    background: rgba(0, 0, 0, 0.06);
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: monospace;
+    color: #b01020;
+}

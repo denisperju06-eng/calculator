@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "nume": "Ion Creangă",
+    "disciplina": "Paradigma Scriptică",
+    "laborator": "Laboratorul 1 - JS",
+    "nota": 10,
+    "status": "Promovat",
+    "data_predare": "2026-09-15"
+  },
+  {
+    "id": 2,
+    "nume": "Mihai Eminescu",
+    "disciplina": "Paradigma Scriptică",
+    "laborator": "Laboratorul 1 - JS",
+    "nota": 10,
+    "status": "Promovat",
+    "data_predare": "2026-09-15"
+  },
+  {
+    "id": 3,
+    "nume": "Vasile Alecsandri",
+    "disciplina": "Paradigma Scriptică",
+    "laborator": "Laboratorul 1 - JS",
+    "nota": 9,
+    "status": "Promovat",
+    "data_predare": "2026-09-14"
+  },
+  {
+    "id": 4,
+    "nume": "George Coșbuc",
+    "disciplina": "Paradigma Scriptică",
+    "laborator": "Laboratorul 1 - JS",
+    "nota": 8,
+    "status": "Promovat",
+    "data_predare": "2026-09-13"
+  },
+  {
+    "id": 5,
+    "nume": "Lucian Blaga",
+    "disciplina": "Paradigma Scriptică",
+    "laborator": "Laboratorul 1 - JS",
+    "nota": 10,
+    "status": "Promovat",
+    "data_predare": "2026-09-15"
+  }
+]

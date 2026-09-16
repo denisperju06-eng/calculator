@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Catalogul Bibliotecii Universitare - Exemplu XML pentru Laboratorul 3 -->
+<catalog name="Biblioteca Tehnica" campus="Central">
+    <section id="s1" domain="Informatica">
+        <book id="b1" isbn="978-0262033848" format="hardcover">
+            <title>Structure and Interpretation of Computer Programs</title>
+            <author country="USA">Harold Abelson</author>
+            <author country="USA">Gerald Jay Sussman</author>
+            <year>1996</year>
+            <topics>
+                <topic>Functional Programming</topic>
+                <topic>Lisp</topic>
+                <topic>Recursion</topic>
+            </topics>
+            <price currency="USD">65.00</price>
+            <available status="yes" />
+        </book>
+        <book id="b2" isbn="978-0131103627" format="paperback">
+            <title>The C Programming Language</title>
+            <author country="USA">Brian W. Kernighan</author>
+            <author country="USA">Dennis M. Ritchie</author>
+            <year>1988</year>
+            <topics>
+                <topic>Systems Programming</topic>
+                <topic>Pointers</topic>
+            </topics>
+            <price currency="USD">45.50</price>
+            <available status="yes" />
+        </book>
+    </section>
+    <section id="s2" domain="Matematica">
+        <book id="b3" isbn="978-0486600888" format="hardcover">
+            <title>Calculus and Analytic Geometry</title>
+            <author country="Romania">Gheorghe Titeica</author>
+            <year>1965</year>
+            <topics>
+                <topic>Analiza Matematica</topic>
+                <topic>Geometrie</topic>
+            </topics>
+            <price currency="RON">55.00</price>
+            <available status="no" />
+        </book>
+    </section>
+</catalog>

@@ -1,0 +1,125 @@
+{
+    "sursa_api": "https://jsonplaceholder.typicode.com",
+    "utilizator": {
+        "id": 1,
+        "name": "Leanne Graham",
+        "username": "Bret",
+        "email": "Sincere@april.biz",
+        "address": {
+            "street": "Kulas Light",
+            "suite": "Apt. 556",
+            "city": "Gwenborough",
+            "zipcode": "92998-3874",
+            "geo": {
+                "lat": "-37.3159",
+                "lng": "81.1496"
+            }
+        },
+        "phone": "1-770-736-8031 x56442",
+        "website": "hildegard.org",
+        "company": {
+            "name": "Romaguera-Crona",
+            "catchPhrase": "Multi-layered client-server neural-net",
+            "bs": "harness real-time e-markets"
+        }
+    },
+    "postare_creata": {
+        "userId": 1,
+        "title": "Implementare Procedurala Lab 2",
+        "body": "Acest articol a fost transmis cu succes din aplicatia Python folosind biblioteca requests.",
+        "id": 101
+    },
+    "sarcini_nefinalizate": [
+        {
+            "userId": 1,
+            "id": 1,
+            "title": "delectus aut autem",
+            "completed": false
+        },
+        {
+            "userId": 1,
+            "id": 2,
+            "title": "quis ut nam facilis et officia qui",
+            "completed": false
+        },
+        {
+            "userId": 1,
+            "id": 3,
+            "title": "fugiat veniam minus",
+            "completed": false
+        },
+        {
+            "userId": 1,
+            "id": 5,
+            "title": "laboriosam mollitia et enim quasi adipisci quia provident illum",
+            "completed": false
+        },
+        {
+            "userId": 1,
+            "id": 6,
+            "title": "qui ullam ratione quibusdam voluptatem quia omnis",
+            "completed": false
+        },
+        {
+            "userId": 1,
+            "id": 7,
+            "title": "illo expedita consequatur quia in",
+            "completed": false
+        },
+        {
+            "userId": 1,
+            "id": 9,
+            "title": "molestiae perspiciatis ipsa",
+            "completed": false
+        },
+        {
+            "userId": 1,
+            "id": 13,
+            "title": "et doloremque nulla",
+            "completed": false
+        },
+        {
+            "userId": 1,
+            "id": 18,
+            "title": "dolorum est consequatur ea mollitia in culpa",
+            "completed": false
+        }
+    ],
+    "comentarii_postare_1": [
+        {
+            "postId": 1,
+            "id": 1,
+            "name": "id labore ex et quam laborum",
+            "email": "Eliseo@gardner.biz",
+            "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
+        },
+        {
+            "postId": 1,
+            "id": 2,
+            "name": "quo vero reiciendis velit similique earum",
+            "email": "Jayne_Kuhic@sydney.com",
+            "body": "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et"
+        },
+        {
+            "postId": 1,
+            "id": 3,
+            "name": "odio adipisci rerum aut animi",
+            "email": "Nikita@garfield.biz",
+            "body": "quia molestiae reprehenderit quasi aspernatur\naut expedita occaecati aliquam eveniet laudantium\nomnis quibusdam delectus saepe quia accusamus maiores nam est\ncum et ducimus et vero voluptates excepturi deleniti ratione"
+        },
+        {
+            "postId": 1,
+            "id": 4,
+            "name": "alias odio sit",
+            "email": "Lew@alysha.tv",
+            "body": "non et atque\noccaecati deserunt quas accusantium unde odit nobis qui voluptatem\nquia voluptas consequuntur itaque dolor\net qui rerum deleniti ut occaecati"
+        },
+        {
+            "postId": 1,
+            "id": 5,
+            "name": "vero eaque aliquid doloribus et culpa",
+            "email": "Hayden@althea.biz",
+            "body": "harum non quasi et ratione\ntempore iure ex voluptates in ratione\nharum architecto fugit inventore cupiditate\nvoluptates magni quo et"
+        }
+    ]
+}

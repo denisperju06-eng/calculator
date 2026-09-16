@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator de Buzunar - Paradigma Orientată pe Obiecte</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="window-controls">
+                <span class="control-dot close"></span>
+                <span class="control-dot minimize"></span>
+                <span class="control-dot maximize"></span>
+            </div>
+            <div class="app-title">
+                <span class="calc-icon">🧮</span>
+                <span>Calculator OOP</span>
+            </div>
+            <div class="header-actions">
+                <button id="historyToggleBtn" class="icon-btn" title="Istoric calcule">⏱</button>
+                <button id="infoToggleBtn" class="icon-btn" title="Cerințe & Concepte OOP">ℹ️</button>
+            </div>
+        </header>
+
+        <!-- Moduri: Standard, Științific, Programator -->
+        <nav class="mode-navigation">
+            <button class="mode-tab active" data-mode="scientific">Științific</button>
+            <button class="mode-tab" data-mode="standard">Standard</button>
+            <button class="mode-tab" data-mode="programmer">Programator (HEX/BIN)</button>
+        </nav>
+
+        <!-- Banner pentru afișarea și prelucrarea erorilor (Cerința e) -->
+        <div id="errorBanner" class="error-banner">
+            <span class="error-icon">⚠️</span>
+            <span id="errorMessage" class="error-text">Eroare de calcul</span>
+        </div>
+
+        <!-- Ecran Afișaj (Display) -->
+        <section class="display-section">
+            <div class="display-meta">
+                <span id="angleModeBtn" class="angle-badge" title="Comută între Grade (DEG) și Radiani (RAD)">DEG</span>
+                <span id="memoryIndicator" class="memory-badge" title="Indicator memorie activă">M</span>
+            </div>
+            <div id="displaySecondary" class="display-secondary">&nbsp;</div>
+            <div id="displayPrimary" class="display-primary">0</div>
+        </section>
+
+        <!-- Panou Conversie Baze (Programator - Cerința f) -->
+        <section id="programmerBasePanel" class="programmer-base-panel">
+            <div class="base-row" data-base="HEX">
+                <span class="base-label">HEX</span>
+                <span id="baseHexVal" class="base-value">0</span>
+            </div>
+            <div class="base-row active" data-base="DEC">
+                <span class="base-label">DEC</span>
+                <span id="baseDecVal" class="base-value">0</span>
+            </div>
+            <div class="base-row" data-base="OCT">
+                <span class="base-label">OCT</span>
+                <span id="baseOctVal" class="base-value">0</span>
+            </div>
+            <div class="base-row" data-base="BIN">
+                <span class="base-label">BIN</span>
+                <span id="baseBinVal" class="base-value">0</span>
+            </div>
+        </section>
+
+        <!-- Bară Memorie (Cerința d: MC, MR, M+, M-, MS) -->
+        <div class="memory-bar">
+            <button class="mem-btn" data-action="mc" disabled>MC</button>
+            <button class="mem-btn" data-action="mr" disabled>MR</button>
+            <button class="mem-btn" data-action="m-plus">M+</button>
+            <button class="mem-btn" data-action="m-minus">M−</button>
+            <button class="mem-btn" data-action="ms">MS</button>
+        </div>
+
+        <!-- Tastatură Mod ȘTIINȚIFIC (Recomandat - Toate cerințele a, b, c, d, e) -->
+        <main id="keypadScientific" class="keypad keypad-scientific active">
+            <!-- Rândul 1: Trig / Funcții -->
+            <button class="btn btn-func" data-action="unary-op" data-value="sin">sin</button>
+            <button class="btn btn-func" data-action="unary-op" data-value="cos">cos</button>
+            <button class="btn btn-func" data-action="unary-op" data-value="tan">tan</button>
+            <button class="btn btn-func" data-action="constant" data-value="pi">π</button>
+            <button class="btn btn-func" data-action="constant" data-value="e">e</button>
+
+            <!-- Rândul 2: Arcsin, Arccos, Arctan, Log, Ln -->
+            <button class="btn btn-func" data-action="unary-op" data-value="asin">sin⁻¹</button>
+            <button class="btn btn-func" data-action="unary-op" data-value="acos">cos⁻¹</button>
+            <button class="btn btn-func" data-action="unary-op" data-value="atan">tan⁻¹</button>
+            <button class="btn btn-func" data-action="unary-op" data-value="log">log₁₀</button>
+            <button class="btn btn-func" data-action="unary-op" data-value="ln">ln</button>
+
+            <!-- Rândul 3: Log2, 10^x, e^x, Radicale -->
+            <button class="btn btn-func" data-action="unary-op" data-value="log2">log₂</button>
+            <button class="btn btn-func" data-action="unary-op" data-value="10x">10ˣ</button>
+            <button class="btn btn-func" data-action="unary-op" data-value="exp">eˣ</button>
+            <button class="btn btn-func" data-action="clear-entry">CE</button>
+            <button class="btn btn-danger" data-action="clear">C</button>
+
+            <!-- Rândul 4: Puteri și utilitare -->
+            <button class="btn btn-func" data-action="unary-op" data-value="sqr">x²</button>
+            <button class="btn btn-func" data-action="unary-op" data-value="cube">x³</button>
+            <button class="btn btn-func" data-action="binary-op" data-value="pow">xʸ</button>
+            <button class="btn btn-func" data-action="unary-op" data-value="recip">1/x</button>
+            <button class="btn btn-func" data-action="backspace">⌫</button>
+
+            <!-- Rândul 5: Radicali, Procent, Modulo, Împărțire -->
+            <button class="btn btn-func" data-action="unary-op" data-value="sqrt">√x</button>
+            <button class="btn btn-func" data-action="unary-op" data-value="cbrt">∛x</button>
+            <button class="btn btn-func" data-action="unary-op" data-value="pct">%</button>
+            <button class="btn btn-func" data-action="binary-op" data-value="mod">mod</button>
+            <button class="btn btn-op" data-action="binary-op" data-value="/">÷</button>
+
+            <!-- Rândul 6: |x|, 7, 8, 9, Înmulțire -->
+            <button class="btn btn-func" data-action="unary-op" data-value="abs">|x|</button>
+            <button class="btn btn-digit" data-action="digit" data-value="7">7</button>
+            <button class="btn btn-digit" data-action="digit" data-value="8">8</button>
+            <button class="btn btn-digit" data-action="digit" data-value="9">9</button>
+            <button class="btn btn-op" data-action="binary-op" data-value="*">×</button>
+
+            <!-- Rândul 7: Factorial, 4, 5, 6, Scădere -->
+            <button class="btn btn-func" data-action="unary-op" data-value="fact">n!</button>
+            <button class="btn btn-digit" data-action="digit" data-value="4">4</button>
+            <button class="btn btn-digit" data-action="digit" data-value="5">5</button>
+            <button class="btn btn-digit" data-action="digit" data-value="6">6</button>
+            <button class="btn btn-op" data-action="binary-op" data-value="-">−</button>
+
+            <!-- Rândul 8: +/- , 1, 2, 3, Adunare -->
+            <button class="btn btn-func" data-action="toggle-sign">±</button>
+            <button class="btn btn-digit" data-action="digit" data-value="1">1</button>
+            <button class="btn btn-digit" data-action="digit" data-value="2">2</button>
+            <button class="btn btn-digit" data-action="digit" data-value="3">3</button>
+            <button class="btn btn-op" data-action="binary-op" data-value="+">+</button>
+
+            <!-- Rândul 9: 00, 0, . , = -->
+            <button class="btn btn-digit" data-action="digit" data-value="00">00</button>
+            <button class="btn btn-digit btn-span-2" data-action="digit" data-value="0">0</button>
+            <button class="btn btn-digit" data-action="decimal">.</button>
+            <button class="btn btn-equals" data-action="equals">=</button>
+        </main>
+
+        <!-- Tastatură Mod STANDARD -->
+        <main id="keypadStandard" class="keypad keypad-standard">
+            <button class="btn btn-func" data-action="unary-op" data-value="pct">%</button>
+            <button class="btn btn-func" data-action="clear-entry">CE</button>
+            <button class="btn btn-danger" data-action="clear">C</button>
+            <button class="btn btn-func" data-action="backspace">⌫</button>
+
+            <button class="btn btn-func" data-action="unary-op" data-value="recip">1/x</button>
+            <button class="btn btn-func" data-action="unary-op" data-value="sqr">x²</button>
+            <button class="btn btn-func" data-action="unary-op" data-value="sqrt">√x</button>
+            <button class="btn btn-op" data-action="binary-op" data-value="/">÷</button>
+
+            <button class="btn btn-digit" data-action="digit" data-value="7">7</button>
+            <button class="btn btn-digit" data-action="digit" data-value="8">8</button>
+            <button class="btn btn-digit" data-action="digit" data-value="9">9</button>
+            <button class="btn btn-op" data-action="binary-op" data-value="*">×</button>
+
+            <button class="btn btn-digit" data-action="digit" data-value="4">4</button>
+            <button class="btn btn-digit" data-action="digit" data-value="5">5</button>
+            <button class="btn btn-digit" data-action="digit" data-value="6">6</button>
+            <button class="btn btn-op" data-action="binary-op" data-value="-">−</button>
+
+            <button class="btn btn-digit" data-action="digit" data-value="1">1</button>
+            <button class="btn btn-digit" data-action="digit" data-value="2">2</button>
+            <button class="btn btn-digit" data-action="digit" data-value="3">3</button>
+            <button class="btn btn-op" data-action="binary-op" data-value="+">+</button>
+
+            <button class="btn btn-func" data-action="toggle-sign">±</button>
+            <button class="btn btn-digit" data-action="digit" data-value="0">0</button>
+            <button class="btn btn-digit" data-action="decimal">.</button>
+            <button class="btn btn-equals" data-action="equals">=</button>
+        </main>
+
+        <!-- Tastatură Mod PROGRAMATOR (HEX, DEC, OCT, BIN) -->
+        <main id="keypadProgrammer" class="keypad keypad-programmer">
+            <!-- Taste Hexazecimale A-F -->
+            <button class="btn btn-hex" data-action="digit" data-value="A" disabled>A</button>
+            <button class="btn btn-hex" data-action="digit" data-value="B" disabled>B</button>
+            <button class="btn btn-func" data-action="clear-entry">CE</button>
+            <button class="btn btn-danger" data-action="clear">C</button>
+            <button class="btn btn-func" data-action="backspace">⌫</button>
+
+            <button class="btn btn-hex" data-action="digit" data-value="C" disabled>C</button>
+            <button class="btn btn-hex" data-action="digit" data-value="D" disabled>D</button>
+            <button class="btn btn-programmer-digit btn-digit" data-action="digit" data-value="7">7</button>
+            <button class="btn btn-programmer-digit btn-digit" data-action="digit" data-value="8">8</button>
+            <button class="btn btn-programmer-digit btn-digit" data-action="digit" data-value="9">9</button>
+
+            <button class="btn btn-hex" data-action="digit" data-value="E" disabled>E</button>
+            <button class="btn btn-hex" data-action="digit" data-value="F" disabled>F</button>
+            <button class="btn btn-programmer-digit btn-digit" data-action="digit" data-value="4">4</button>
+            <button class="btn btn-programmer-digit btn-digit" data-action="digit" data-value="5">5</button>
+            <button class="btn btn-programmer-digit btn-digit" data-action="digit" data-value="6">6</button>
+
+            <button class="btn btn-func" data-action="binary-op" data-value="mod">MOD</button>
+            <button class="btn btn-op" data-action="binary-op" data-value="/">÷</button>
+            <button class="btn btn-programmer-digit btn-digit" data-action="digit" data-value="1">1</button>
+            <button class="btn btn-programmer-digit btn-digit" data-action="digit" data-value="2">2</button>
+            <button class="btn btn-programmer-digit btn-digit" data-action="digit" data-value="3">3</button>
+
+            <button class="btn btn-op" data-action="binary-op" data-value="*">×</button>
+            <button class="btn btn-op" data-action="binary-op" data-value="-">−</button>
+            <button class="btn btn-func" data-action="toggle-sign">±</button>
+            <button class="btn btn-programmer-digit btn-digit" data-action="digit" data-value="0">0</button>
+            <button class="btn btn-op" data-action="binary-op" data-value="+">+</button>
+
+            <div class="programmer-bottom-bar">
+                <button class="btn btn-equals full-width" data-action="equals">=</button>
+            </div>
+        </main>
+
+        <!-- Modal Istoric Calcule -->
+        <div id="historyModal" class="history-modal">
+            <div class="history-header">
+                <h3>Istoric Calcule</h3>
+                <button id="clearHistoryBtn" class="clear-hist-btn" title="Golește istoricul">🗑️</button>
+            </div>
+            <div id="historyList" class="history-list">
+                <div class="empty-history">Nu există calcule recente</div>
+            </div>
+        </div>
+
+        <!-- Modal Informații / Cerințe Lucrare -->
+        <div id="infoModal" class="info-modal">
+            <div class="info-content">
+                <div class="info-header">
+                    <h3>Implementare Cerințe OOP</h3>
+                    <button id="closeInfoBtn" class="close-info-btn">✕</button>
+                </div>
+                <div class="info-body">
+                    <ul>
+                        <li><strong>a. Operații aritmetice de bază (+, −, ×, ÷, mod)</strong>: Clasa <code>BinaryOperation</code> moștenită de <code>AddOperation</code>, <code>SubtractOperation</code>, etc.</li>
+                        <li><strong>b. Minim 3 operații adăugătoare</strong>: Radical (<code>√x</code>, <code>∛x</code>), Puteri (<code>x²</code>, <code>x³</code>, <code>xʸ</code>), Procent (<code>%</code>), Invers (<code>1/x</code>), Factorial (<code>n!</code>), Modul (<code>|x|</code>).</li>
+                        <li><strong>c. Trigonometrie &amp; Logaritmi</strong>: 6 funcții trigonometrice (<code>sin</code>, <code>cos</code>, <code>tan</code>, <code>asin</code>, <code>acos</code>, <code>atan</code> cu modul DEG/RAD) + 5 funcții logaritmice (<code>ln</code>, <code>log₁₀</code>, <code>log₂</code>, <code>eˣ</code>, <code>10ˣ</code>).</li>
+                        <li><strong>d. Lucru cu memoria</strong>: <code>MemoryUnit</code> cu încapsulare privată (<code>MC</code>, <code>MR</code>, <code>M+</code>, <code>M−</code>, <code>MS</code>).</li>
+                        <li><strong>e. Prelucrarea erorilor</strong>: Ierarhie de excepții OOP derivate din <code>CalculatorError</code> (împărțire la zero, radical negativ, logaritm negativ, tangentă la 90°, overflow).</li>
+                        <li><strong>f. Conversie Hexazecimală</strong>: Clasa <code>BaseConverter</code> cu transformare automată între <code>HEX</code>, <code>DEC</code>, <code>OCT</code> și <code>BIN</code> în modul Programator.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripturi OOP încărcate în ordine ierarhică -->
+    <script src="js/errors/CalculatorErrors.js"></script>
+    <script src="js/operations/BaseOperation.js"></script>
+    <script src="js/operations/ArithmeticOps.js"></script>
+    <script src="js/operations/AdditionalOps.js"></script>
+    <script src="js/operations/TrigOps.js"></script>
+    <script src="js/operations/LogOps.js"></script>
+    <script src="js/core/MemoryUnit.js"></script>
+    <script src="js/core/BaseConverter.js"></script>
+    <script src="js/core/CalculatorEngine.js" ></script>
+    <script src="js/ui/CalculatorUI.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        // Dialog Info toggling
+        const infoBtn = document.getElementById('infoToggleBtn');
+        const infoModal = document.getElementById('infoModal');
+        const closeInfoBtn = document.getElementById('closeInfoBtn');
+
+        if (infoBtn && infoModal && closeInfoBtn) {
+            infoBtn.addEventListener('click', () => infoModal.classList.add('active'));
+            closeInfoBtn.addEventListener('click', () => infoModal.classList.remove('active'));
+            infoModal.addEventListener('click', (e) => {
+                if (e.target === infoModal) infoModal.classList.remove('active');
+            });
+        }
+    </script>
+</body>
+</html>
