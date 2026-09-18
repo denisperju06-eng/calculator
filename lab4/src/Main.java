@@ -1,3 +1,4 @@
+import core.*;
 import java.io.File;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;

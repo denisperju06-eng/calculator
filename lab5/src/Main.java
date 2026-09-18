@@ -1,3 +1,4 @@
+import core.*;
 import java.awt.SystemTray;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;

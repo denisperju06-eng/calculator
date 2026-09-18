@@ -1,3 +1,4 @@
+import core.*;
 import javax.swing.*;
 
 /**

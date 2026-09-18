@@ -87,10 +87,10 @@ Din linia de comandă (Terminal):
 cd /Users/preference/Desktop/calculator/lab2
 
 # Compilare surse Java
-javac src/*.java
+javac -d out src/*.java
 
 # Rulare aplicație
-java -cp src Main
+java -cp out Main
 ```
 
 ---
