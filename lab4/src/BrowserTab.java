@@ -379,44 +379,20 @@ public class BrowserTab extends JPanel {
     // ==========================================
     private String generateHomePageHtml() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<html><body style='text-align: center; padding: 20px; font-family: sans-serif;'>");
-
-        sb.append("<div style='margin-top: 30px; margin-bottom: 20px;'>");
-        sb.append("<h1 style='color: #1976D2; font-size: 32px;'>🌐 Internet Browser POO</h1>");
-        sb.append("<p style='color: #666; font-size: 14px;'>Laborator 4 - Paradigma Orientată pe Obiecte (Java Swing)</p>");
+        sb.append("<html><body style='text-align: center; padding: 40px; font-family: \"Segoe UI\", sans-serif; background-color: #0f172a; color: #f8fafc;'>");
+        sb.append("<div style='margin-bottom: 30px;'>");
+        sb.append("<h1 style='color: #38bdf8; font-size: 42px; margin: 0;'>🚀 Nexus Browser</h1>");
+        sb.append("<p style='color: #94a3b8; font-size: 16px; font-style: italic;'>Exploratorul tău web ultra-rapid</p>");
         sb.append("</div>");
-
-        // Caseta de comenzi rapide populare
-        sb.append("<div style='margin: 25px auto; max-width: 600px; text-align: left; background-color: #f5f5f5; padding: 15px; border-radius: 8px;'>");
-        sb.append("<h3 style='margin-top: 0; color: #333;'>🚀 Scurtături Rapide (Acces direct):</h3>");
-        sb.append("<p>");
-        sb.append("• <a href='https://html.duckduckgo.com'>DuckDuckGo HTML (Căutare ușoară)</a><br>");
-        sb.append("• <a href='https://ro.wikipedia.org'>Wikipedia Română</a> | <a href='https://en.wikipedia.org'>Wikipedia English</a><br>");
-        sb.append("• <a href='https://example.com'>Example Domain (Test HTTP simplu)</a><br>");
-        sb.append("• <a href='https://docs.oracle.com/en/java/'>Java Official Documentation</a><br>");
-        sb.append("• <a href='https://www.google.com'>Google Search</a> | <a href='https://www.bing.com'>Microsoft Bing</a>");
-        sb.append("</p>");
-        sb.append("</div>");
-
-        // Informații despre funcționalitățile implementate (Cerințele laboratorului)
-        sb.append("<div style='margin: 20px auto; max-width: 600px; text-align: left; background-color: #E3F2FD; padding: 15px; border-radius: 8px;'>");
-        sb.append("<h3 style='margin-top: 0; color: #0D47A1;'>📋 Funcționalități Implementate conform Baremelor:</h3>");
-        sb.append("<ul style='color: #333; line-height: 1.6;'>");
-        sb.append("<li><b>a. Interfață generală cu bară de căutare + motor de căutare integrat:</b> bară URL inteligentă cu suport DuckDuckGo, Google, Bing, Wikipedia.</li>");
-        sb.append("<li><b>b. Stop + Refresh:</b> butoane dedicate pe bară (🔄 / ⏹) cu scurtături tastatură (F5 / Esc).</li>");
-        sb.append("<li><b>c. History:</b> istoric complet de navigare cu filtrare în timp real și persistență în <code>history.txt</code>.</li>");
-        sb.append("<li><b>d. Favorites (salvate în fișier):</b> adăugare la favorite (⭐), bară de semne de carte și salvare în <code>favorites.txt</code>.</li>");
-        sb.append("<li><b>e. Multe pagini (Tabs):</b> sistem complet multi-tab cu adăugare (+), închidere (✕) și comenzi rapide (Ctrl+T, Ctrl+W).</li>");
-        sb.append("<li><b>f. Back + Forward:</b> stive independente de navigare pentru fiecare tab (⬅ / ➡).</li>");
-        sb.append("</ul>");
-        sb.append("</div>");
-
-        // Link-uri interne
-        sb.append("<div style='margin-top: 20px; font-size: 13px; color: #888;'>");
-        sb.append("<a href='about:history'>📜 Vezi Istoricul</a> &nbsp;|&nbsp; ");
-        sb.append("<a href='about:favorites'>⭐ Vezi Favoritele</a> &nbsp;|&nbsp; ");
-        sb.append("<a href='about:help'>ℹ️ Ajutor & Scurtături</a>");
-        sb.append("</div>");
+        
+        sb.append("<div style='margin: 30px auto; max-width: 650px; text-align: left; background-color: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid #334155;'>");
+        sb.append("<h2 style='color: #a78bfa; margin-top: 0; border-bottom: 1px solid #334155; padding-bottom: 10px;'>🌟 Linkuri Rapide</h2>");
+        sb.append("<p style='font-size: 15px;'>");
+        sb.append("• <a href='https://html.duckduckgo.com' style='color: #f472b6; text-decoration: none;'>DuckDuckGo HTML</a><br><br>");
+        sb.append("• <a href='https://ro.wikipedia.org' style='color: #34d399; text-decoration: none;'>Wikipedia Română</a><br><br>");
+        sb.append("• <a href='https://example.com' style='color: #fbbf24; text-decoration: none;'>Example Domain (Simplu)</a><br><br>");
+        sb.append("• <a href='https://www.google.com' style='color: #60a5fa; text-decoration: none;'>Google Search</a>");
+        sb.append("</p></div>");
 
         sb.append("</body></html>");
         return sb.toString();
@@ -673,143 +649,65 @@ public class BrowserTab extends JPanel {
         }
 
         private PageLoadResult buildGlobalSearchResults(String query) {
-            String encoded = URLEncoder.encode(query, StandardCharsets.UTF_8);
-            String heading = "";
-            String abstractText = "";
-            String abstractUrl = "";
-            List<String> relatedLinks = new ArrayList<>();
-            List<String> wikiTitles = new ArrayList<>();
+            String encoded = query;
+            try { encoded = URLEncoder.encode(query, StandardCharsets.UTF_8.name()); } catch (Exception e) {}
+            
+            List<String> resultsHtml = new ArrayList<>();
             List<String> wikiUrls = new ArrayList<>();
-
-            // 1. DuckDuckGo Instant Answer API
-            try {
-                URL ddgUrl = new URI("https://api.duckduckgo.com/?q=" + encoded + "&format=json").toURL();
-                HttpURLConnection conn = (HttpURLConnection) ddgUrl.openConnection();
-                conn.setConnectTimeout(6000);
-                conn.setReadTimeout(8000);
-                conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)");
-                if (conn.getResponseCode() == 200) {
-                    try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
-                        StringBuilder sb = new StringBuilder();
-                        String l;
-                        while ((l = in.readLine()) != null) sb.append(l);
-                        String raw = sb.toString();
-
-                        Matcher mHead = Pattern.compile("\"Heading\":\\s*\"((?:[^\"\\\\]|\\\\.)*)\"").matcher(raw);
-                        if (mHead.find()) heading = unescapeJson(mHead.group(1));
-
-                        Matcher mAbs = Pattern.compile("\"AbstractText\":\\s*\"((?:[^\"\\\\]|\\\\.)*)\"").matcher(raw);
-                        if (mAbs.find()) abstractText = unescapeJson(mAbs.group(1));
-
-                        Matcher mUrl = Pattern.compile("\"AbstractURL\":\\s*\"((?:[^\"\\\\]|\\\\.)*)\"").matcher(raw);
-                        if (mUrl.find()) abstractUrl = unescapeJson(mUrl.group(1));
-
-                        Matcher mRel = Pattern.compile("\"FirstURL\":\\s*\"([^\"]+)\",\\s*\"Result\":\\s*\"[^\"]*\",\\s*\"Text\":\\s*\"((?:[^\"\\\\]|\\\\.)*)\"").matcher(raw);
-                        while (mRel.find() && relatedLinks.size() < 6) {
-                            relatedLinks.add("<p style='margin: 4px 0;'>• <a href='" + mRel.group(1) + "'>" + escapeHtml(unescapeJson(mRel.group(2))) + "</a></p>");
-                        }
-                    }
-                }
-            } catch (Exception ignored) {}
-
-            // 2. Wikipedia OpenSearch API
+            
+            // 1. Direct Link Guessing (for youtube, google, facebook etc)
+            String qLower = query.toLowerCase().trim();
+            if (qLower.equals("youtube") || qLower.equals("youtube.com")) {
+                resultsHtml.add("<div style='background-color: #262626; border-left: 4px solid #ef4444; padding: 15px; border-radius: 8px; margin-bottom: 15px;'><a href='https://www.youtube.com' style='color: #ef4444; text-decoration: none; font-size: 20px; font-weight: bold;'>▶️ YouTube (Site Oficial)</a><br><span style='color: #9ca3af;'>https://www.youtube.com</span></div>");
+            } else if (qLower.equals("google") || qLower.equals("google.com")) {
+                resultsHtml.add("<div style='background-color: #262626; border-left: 4px solid #3b82f6; padding: 15px; border-radius: 8px; margin-bottom: 15px;'><a href='https://www.google.com' style='color: #3b82f6; text-decoration: none; font-size: 20px; font-weight: bold;'>🔍 Google (Site Oficial)</a><br><span style='color: #9ca3af;'>https://www.google.com</span></div>");
+            } else if (qLower.equals("facebook") || qLower.equals("facebook.com")) {
+                resultsHtml.add("<div style='background-color: #262626; border-left: 4px solid #1877F2; padding: 15px; border-radius: 8px; margin-bottom: 15px;'><a href='https://www.facebook.com' style='color: #1877F2; text-decoration: none; font-size: 20px; font-weight: bold;'>📘 Facebook</a><br><span style='color: #9ca3af;'>https://www.facebook.com</span></div>");
+            } else if (!qLower.contains(" ")) {
+                String guessUrl = qLower.contains(".") ? "https://" + qLower : "https://www." + qLower + ".com";
+                resultsHtml.add("<div style='background-color: #1e293b; border-left: 4px solid #10b981; padding: 15px; border-radius: 8px; margin-bottom: 15px;'><a href='" + guessUrl + "' style='color: #10b981; text-decoration: none; font-size: 20px; font-weight: bold;'>🌐 Deschide direct " + escapeHtml(qLower) + "</a><br><span style='color: #9ca3af;'>" + guessUrl + "</span></div>");
+            }
+            
+            // 2. Fallback Wikipedia API
             try {
                 URL wikiUrl = new URI("https://ro.wikipedia.org/w/api.php?action=opensearch&search=" + encoded + "&limit=6&format=json").toURL();
                 HttpURLConnection conn = (HttpURLConnection) wikiUrl.openConnection();
                 conn.setConnectTimeout(6000);
-                conn.setReadTimeout(8000);
-                conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)");
                 if (conn.getResponseCode() == 200) {
                     try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
-                        StringBuilder sb = new StringBuilder();
-                        String l;
-                        while ((l = in.readLine()) != null) sb.append(l);
+                        StringBuilder sb = new StringBuilder(); String l; while ((l = in.readLine()) != null) sb.append(l);
                         String raw = sb.toString();
-
                         Matcher mWiki = Pattern.compile("\"(https://[^\"]+wikipedia\\.org/wiki/[^\"]+)\"").matcher(raw);
-                        while (mWiki.find() && wikiUrls.size() < 6) {
-                            String wUrl = mWiki.group(1);
-                            wikiUrls.add(wUrl);
-                            String titleFromUrl = wUrl.substring(wUrl.lastIndexOf('/') + 1).replace('_', ' ');
-                            try {
-                                titleFromUrl = java.net.URLDecoder.decode(titleFromUrl, StandardCharsets.UTF_8);
-                            } catch (Exception ignored) {}
-                            wikiTitles.add(titleFromUrl);
-                        }
+                        while (mWiki.find() && wikiUrls.size() < 6) wikiUrls.add(mWiki.group(1));
                     }
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) {}
 
-            // Construire pagină HTML structurată cu rezultate reale
             StringBuilder sb = new StringBuilder();
-            sb.append("<html><body style='padding: 20px; font-family: sans-serif; background-color: #ffffff;'>");
-            sb.append("<div style='background-color: #f1f3f4; padding: 16px; border-radius: 8px; margin-bottom: 20px;'>");
-            sb.append("<h1 style='margin: 0; color: #1a73e8; font-size: 24px;'>🔍 Rezultate Căutare Globală: ").append(escapeHtml(query)).append("</h1>");
-            sb.append("<p style='margin: 4px 0 0 0; color: #5f6368; font-size: 13px;'>Interogare web în timp real</p>");
+            sb.append("<html><body style='padding: 30px; font-family: \"Segoe UI\", sans-serif; background-color: #121212; color: #e0e0e0;'>");
+            sb.append("<div style='background-color: #2563eb; padding: 25px; border-radius: 12px; margin-bottom: 30px;'>");
+            sb.append("<h1 style='margin: 0; color: #ffffff; font-size: 28px;'>🔍 Rezultate pentru: ").append(escapeHtml(query)).append("</h1>");
+            sb.append("<p style='margin: 8px 0 0 0; color: #e2e8f0; font-size: 14px;'>Nexus Web Search Engine</p>");
             sb.append("</div>");
-
-            // Card Site Oficial dacă este domeniu popular (ex: youtube, google, wikipedia, github, reddit)
-            String lowerQ = query.toLowerCase().trim();
-            if (lowerQ.equals("youtube") || lowerQ.equals("youtube.com")) {
-                sb.append("<div style='background: #FFF8E1; border: 1px solid #FFE082; border-radius: 8px; padding: 14px; margin-bottom: 18px;'>");
-                sb.append("<h2 style='margin: 0 0 6px 0; color: #D32F2F;'>▶️ YouTube (Site Oficial)</h2>");
-                sb.append("<p style='margin: 0 0 8px 0; color: #006621; font-weight: bold;'>https://www.youtube.com</p>");
-                sb.append("<p style='margin: 0 0 10px 0;'>Cea mai mare platformă video din lume. Pentru redare video HD/4K cu sunet complet:</p>");
-                sb.append("<p><a href='system:https://www.youtube.com' style='background-color: #D32F2F; color: white; padding: 6px 14px; text-decoration: none; border-radius: 4px; font-weight: bold;'>🌐 Deschide YouTube în Safari / Chrome (Video complet)</a></p>");
-                sb.append("</div>");
-            } else if (lowerQ.equals("google") || lowerQ.equals("google.com")) {
-                sb.append("<div style='background: #E8F0FE; border: 1px solid #C2E7FF; border-radius: 8px; padding: 14px; margin-bottom: 18px;'>");
-                sb.append("<h2 style='margin: 0 0 6px 0; color: #1a73e8;'>🌐 Google (Site Oficial)</h2>");
-                sb.append("<p style='margin: 0 0 8px 0; color: #006621; font-weight: bold;'>https://www.google.com</p>");
-                sb.append("<p><a href='https://www.google.com'>Accesează Google.com</a> &nbsp;|&nbsp; <a href='system:https://www.google.com'>Deschide în Safari / Chrome</a></p>");
-                sb.append("</div>");
-            } else if (lowerQ.equals("github") || lowerQ.equals("github.com")) {
-                sb.append("<div style='background: #F6F8FA; border: 1px solid #D0D7DE; border-radius: 8px; padding: 14px; margin-bottom: 18px;'>");
-                sb.append("<h2 style='margin: 0 0 6px 0; color: #24292F;'>🐙 GitHub (Platformă Dezvoltatori)</h2>");
-                sb.append("<p style='margin: 0 0 8px 0; color: #006621; font-weight: bold;'>https://github.com</p>");
-                sb.append("<p><a href='https://github.com'>Accesează GitHub</a> &nbsp;|&nbsp; <a href='system:https://github.com'>Deschide în Safari / Chrome</a></p>");
-                sb.append("</div>");
-            }
-
-            // Card Enciclopedic / Instant Answer
-            if (!abstractText.isEmpty()) {
-                sb.append("<div style='border: 1px solid #dadce0; border-radius: 8px; padding: 16px; margin-bottom: 20px; background-color: #ffffff;'>");
-                sb.append("<h2 style='margin-top: 0; color: #202124;'>").append(escapeHtml(heading.isEmpty() ? query : heading)).append("</h2>");
-                sb.append("<p style='line-height: 1.6; color: #3c4043; font-size: 14px;'>").append(escapeHtml(abstractText)).append("</p>");
-                if (!abstractUrl.isEmpty()) {
-                    sb.append("<p><a href='").append(escapeHtml(abstractUrl)).append("'>📖 Citește articolul complet pe Wikipedia</a></p>");
+            
+            if (!resultsHtml.isEmpty()) {
+                for (String res : resultsHtml) {
+                    sb.append(res);
                 }
-                sb.append("</div>");
             }
-
-            // Rezultate Articole Wikipedia
+            
             if (!wikiUrls.isEmpty()) {
-                sb.append("<h3 style='color: #202124; border-bottom: 2px solid #1a73e8; padding-bottom: 4px;'>Articole Web & Wikipedia Relevante:</h3>");
-                for (int i = 0; i < wikiUrls.size(); i++) {
-                    String wUrl = wikiUrls.get(i);
-                    String wTitle = (i < wikiTitles.size()) ? wikiTitles.get(i) : wUrl;
-                    sb.append("<div class='result' style='margin-bottom: 14px;'>");
-                    sb.append("<div class='result__title'><a href='").append(escapeHtml(wUrl)).append("'>").append(escapeHtml(wTitle)).append("</a></div>");
-                    sb.append("<div class='result__url'>").append(escapeHtml(wUrl)).append("</div>");
+                sb.append("<h2 style='color: #a78bfa; border-bottom: 2px solid #3f3f46; padding-bottom: 8px; margin-bottom: 20px; margin-top: 30px;'>📚 Articole Wikipedia</h2>");
+                for (String wUrl : wikiUrls) {
+                    sb.append("<div style='background-color: #1e1e1e; padding: 15px; border-radius: 8px; margin-bottom: 15px;'>");
+                    sb.append("<a href='").append(escapeHtml(wUrl)).append("' style='color: #38bdf8; text-decoration: none; font-size: 16px; font-weight: bold;'>").append(escapeHtml(wUrl)).append("</a>");
                     sb.append("</div>");
                 }
             }
-
-            // Teme corelate
-            if (!relatedLinks.isEmpty()) {
-                sb.append("<h3 style='color: #202124; margin-top: 20px;'>Teme Corelate:</h3>");
-                for (String rel : relatedLinks) {
-                    sb.append(rel);
-                }
-            }
-
-            sb.append("<hr style='border: 0; border-top: 1px solid #dadce0; margin: 25px 0;'>");
-            sb.append("<p style='font-size: 13px; color: #5f6368;'>");
-            sb.append("Opțiuni externe: <a href='system:https://www.google.com/search?q=").append(encoded).append("'>Caută pe Google în Browserul de Sistem</a> | ");
-            sb.append("<a href='system:https://www.bing.com/search?q=").append(encoded).append("'>Caută pe Bing</a>");
-            sb.append("</p>");
+            
+            sb.append("<hr style='border: 0; border-top: 1px solid #3f3f46; margin: 30px 0;'>");
+            sb.append("<p style='font-size: 14px; text-align: center; color: #a1a1aa;'>Realizat pentru Internet Browser POO</p>");
             sb.append("</body></html>");
-
             return new PageLoadResult(urlToLoad, "Căutare: " + query, sb.toString(), false);
         }
 

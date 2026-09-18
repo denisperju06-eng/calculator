@@ -277,10 +277,13 @@ public class BrowserWindow extends JFrame implements TabListener, FavoritesListe
         addressPanel.setOpaque(false);
 
         addressField = new JTextField();
-        addressField.setFont(new Font("Dialog", Font.PLAIN, 13));
+        addressField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        addressField.setBackground(new java.awt.Color(255,255,255));
+        addressField.setForeground(new Color(44, 62, 80));
+        addressField.setCaretColor(new java.awt.Color(30,136,229));
         addressField.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(190, 195, 200), 1),
-                BorderFactory.createEmptyBorder(5, 8, 5, 8)
+                BorderFactory.createLineBorder(new Color(20, 100, 170), 2, true),
+                BorderFactory.createEmptyBorder(6, 10, 6, 10)
         ));
         addressField.setToolTipText("Introduceți un URL sau cuvinte cheie de căutare");
 
@@ -307,9 +310,9 @@ public class BrowserWindow extends JFrame implements TabListener, FavoritesListe
         }
         searchEngineCombo.setSelectedItem(searchEngineRegistry.getDefaultEngine());
         searchEngineCombo.setToolTipText("Selectați motorul de căutare integrat");
+        searchEngineCombo.setBackground(Color.WHITE);
 
-        btnGo = new JButton("🔍");
-        btnGo.setToolTipText("Mergi la adresă / Caută cu motorul selectat (Enter)");
+        btnGo = createToolButton("🔍", "Mergi la adresă / Caută cu motorul selectat (Enter)");
         btnGo.setFocusable(false);
         btnGo.addActionListener(e -> handleAddressSubmit());
 
@@ -326,7 +329,7 @@ public class BrowserWindow extends JFrame implements TabListener, FavoritesListe
         btnFavorite = createToolButton("⭐", "Adaugă / Elimină pagina curentă din Favorite (Ctrl+D)");
         btnFavorite.addActionListener(e -> addCurrentToFavorites());
 
-        btnHistory = createToolButton("📜", "Deschide Istoricul de navigare (Ctrl+H)");
+        btnHistory = createToolButton("🕒", "Deschide Istoricul de navigare (Ctrl+H)");
         btnHistory.addActionListener(e -> openHistoryDialog());
 
         btnNewTab = createToolButton("➕", "Deschide un Tab Nou (Ctrl+T)");

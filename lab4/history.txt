@@ -1,3 +1,4 @@
+Căutare: youtube\	https://html.duckduckgo.com/html/?q=youtube%5C	2026-09-17 13:49:24
 Căutare: youtube	https://www.google.com/search?q=youtube&gbv=1	2026-09-16 09:03:39
 Căutare: youtube	https://html.duckduckgo.com/html/?q=youtube	2026-09-16 09:03:22
 YouTube - Wikipedia	https://ro.wikipedia.org/wiki/YouTube	2026-09-16 09:03:10

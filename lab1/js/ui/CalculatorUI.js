@@ -43,6 +43,7 @@
         this.historyModal = document.getElementById('historyModal');
         this.historyToggleBtn = document.getElementById('historyToggleBtn');
         this.clearHistoryBtn = document.getElementById('clearHistoryBtn');
+        this.closeHistoryBtn = document.getElementById('closeHistoryBtn');
     }
 
     bindEvents() {
@@ -92,6 +93,12 @@
             this.clearHistoryBtn.addEventListener('click', () => {
                 this.engine.clear();
                 if (this.historyList) this.historyList.innerHTML = '<div class="empty-history">Nu există calcule recente</div>';
+            });
+        }
+        
+        if (this.closeHistoryBtn) {
+            this.closeHistoryBtn.addEventListener('click', () => {
+                this.historyModal.classList.remove('active');
             });
         }
 

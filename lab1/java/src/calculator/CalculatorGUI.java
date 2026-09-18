@@ -4,6 +4,8 @@ import calculator.core.CalculatorEngine;
 import calculator.errors.CalculatorException;
 
 import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -49,13 +51,13 @@ public class CalculatorGUI extends JFrame {
 
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
         mainPanel.setBorder(new EmptyBorder(12, 12, 12, 12));
-        mainPanel.setBackground(new Color(243, 243, 243));
+        mainPanel.setBackground(new Color(32, 32, 32));
 
         // 1. ZONA DE DISPLAY
         JPanel displayPanel = new JPanel(new BorderLayout(5, 5));
-        displayPanel.setBackground(Color.WHITE);
+        displayPanel.setBackground(new Color(24, 24, 24));
         displayPanel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                BorderFactory.createLineBorder(new Color(60, 60, 60), 1),
                 new EmptyBorder(10, 15, 10, 15)
         ));
 
@@ -64,6 +66,10 @@ public class CalculatorGUI extends JFrame {
 
         degRadBtn = new JButton("DEG");
         degRadBtn.setFont(new Font("Segoe UI", Font.BOLD, 11));
+        degRadBtn.setForeground(new Color(150, 150, 150));
+        degRadBtn.setBackground(new Color(40, 40, 40));
+        degRadBtn.setOpaque(true);
+        degRadBtn.setBorderPainted(false);
         degRadBtn.setFocusPainted(false);
         degRadBtn.addActionListener(e -> {
             boolean current = engine.isUseDegrees();
@@ -88,7 +94,9 @@ public class CalculatorGUI extends JFrame {
         displayField.setHorizontalAlignment(SwingConstants.RIGHT);
         displayField.setEditable(false);
         displayField.setBorder(null);
-        displayField.setBackground(Color.WHITE);
+        displayField.setBackground(new Color(24, 24, 24));
+        displayField.setForeground(Color.WHITE);
+        displayField.setCaretColor(Color.WHITE);
 
         displayPanel.add(metaPanel, BorderLayout.WEST);
         displayPanel.add(secondaryDisplay, BorderLayout.NORTH);
@@ -96,7 +104,7 @@ public class CalculatorGUI extends JFrame {
 
         // 2. PANOU BAZE (Cerința f)
         JPanel basePanel = new JPanel(new GridLayout(4, 1, 2, 2));
-        basePanel.setBackground(new Color(230, 235, 245));
+        basePanel.setBackground(new Color(15, 15, 15));
         basePanel.setBorder(new EmptyBorder(6, 10, 6, 10));
 
         hexLabel = new JLabel("HEX: 0");
@@ -106,6 +114,10 @@ public class CalculatorGUI extends JFrame {
 
         Font baseFont = new Font("Monospaced", Font.BOLD, 11);
         hexLabel.setFont(baseFont);
+        hexLabel.setForeground(new Color(100, 200, 255));
+        decLabel.setForeground(new Color(100, 200, 255));
+        octLabel.setForeground(new Color(100, 200, 255));
+        binLabel.setForeground(new Color(100, 200, 255));
         decLabel.setFont(baseFont);
         octLabel.setFont(baseFont);
         binLabel.setFont(baseFont);
@@ -179,21 +191,73 @@ public class CalculatorGUI extends JFrame {
     private JButton createButton(String text, boolean highlight) {
         JButton btn = new JButton(text);
         btn.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        btn.setFocusPainted(false);
+        btn.setFocusPainted(false); btn.setOpaque(true); btn.setBorderPainted(false);
         if (highlight) {
-            btn.setBackground(new Color(0, 103, 192));
+            btn.setBackground(new Color(255, 140, 0));
             btn.setForeground(Color.WHITE);
         } else if (text.matches("[0-9]")) {
-            btn.setBackground(Color.WHITE);
-            btn.setForeground(Color.BLACK);
+            btn.setBackground(new Color(60, 60, 60));
+            btn.setForeground(Color.WHITE);
             btn.setFont(new Font("Segoe UI", Font.BOLD, 16));
         } else {
-            btn.setBackground(new Color(248, 249, 250));
-            btn.setForeground(new Color(30, 30, 30));
+            btn.setBackground(new Color(45, 45, 45));
+            btn.setForeground(new Color(200, 200, 200));
         }
 
         btn.addActionListener(new ButtonClickListener(text));
         return btn;
+    }
+
+    
+    private void setupKeyBindings() {
+        JRootPane rootPane = this.getRootPane();
+        InputMap im = rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap am = rootPane.getActionMap();
+
+        // Cifre 0-9
+        for (int i = 0; i <= 9; i++) {
+            final String digit = String.valueOf(i);
+            im.put(KeyStroke.getKeyStroke(digit), "digit" + digit);
+            im.put(KeyStroke.getKeyStroke("NUMPAD" + digit), "digit" + digit);
+            am.put("digit" + digit, new AbstractAction() {
+                public void actionPerformed(ActionEvent e) { handleCommand(digit); }
+            });
+        }
+
+        // Operatori
+        im.put(KeyStroke.getKeyStroke('+'), "add");
+        im.put(KeyStroke.getKeyStroke("ADD"), "add");
+        am.put("add", new AbstractAction() { public void actionPerformed(ActionEvent e) { handleCommand("+"); } });
+
+        im.put(KeyStroke.getKeyStroke('-'), "sub");
+        im.put(KeyStroke.getKeyStroke("SUBTRACT"), "sub");
+        am.put("sub", new AbstractAction() { public void actionPerformed(ActionEvent e) { handleCommand("−"); } });
+
+        im.put(KeyStroke.getKeyStroke('*'), "mul");
+        im.put(KeyStroke.getKeyStroke("MULTIPLY"), "mul");
+        am.put("mul", new AbstractAction() { public void actionPerformed(ActionEvent e) { handleCommand("×"); } });
+
+        im.put(KeyStroke.getKeyStroke('/'), "div");
+        im.put(KeyStroke.getKeyStroke("DIVIDE"), "div");
+        am.put("div", new AbstractAction() { public void actionPerformed(ActionEvent e) { handleCommand("÷"); } });
+
+        // Enter / Egal
+        im.put(KeyStroke.getKeyStroke("ENTER"), "eq");
+        im.put(KeyStroke.getKeyStroke('='), "eq");
+        am.put("eq", new AbstractAction() { public void actionPerformed(ActionEvent e) { handleCommand("="); } });
+
+        // Backspace
+        im.put(KeyStroke.getKeyStroke("BACK_SPACE"), "backspace");
+        am.put("backspace", new AbstractAction() { public void actionPerformed(ActionEvent e) { handleCommand("⌫"); } });
+
+        // Escape / Clear
+        im.put(KeyStroke.getKeyStroke("ESCAPE"), "clear");
+        am.put("clear", new AbstractAction() { public void actionPerformed(ActionEvent e) { handleCommand("C"); } });
+
+        // Decimal punct
+        im.put(KeyStroke.getKeyStroke('.'), "dot");
+        im.put(KeyStroke.getKeyStroke("DECIMAL"), "dot");
+        am.put("dot", new AbstractAction() { public void actionPerformed(ActionEvent e) { handleCommand("."); } });
     }
 
     private class ButtonClickListener implements ActionListener {
@@ -364,6 +428,7 @@ public class CalculatorGUI extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             CalculatorGUI gui = new CalculatorGUI();
+            gui.setupKeyBindings();
             gui.setVisible(true);
         });
     }
