@@ -2,7 +2,7 @@
 
 4.       Internet Browser 
 
-a.      Interfata generala cu bara de cautare + un motor de căutare integrat (cerința  minimă pentru nota 5)
+a.      Interfata generala cu bara de cautare + un motor de căutare integrat (cerința minimă pentru nota 5)
 
 b.      Stop+Refresh (1) 
 
