@@ -1,4 +1,4 @@
-package core;
+
 import javax.swing.JTextPane;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.StyleConstants;

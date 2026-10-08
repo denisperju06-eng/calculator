@@ -1,4 +1,4 @@
-package core;
+
 /**
  * Clasă imutabilă ce încapsulează rezultatul unei operații de căutare sau înlocuire.
  * Respectă principiul încapsulării din Paradigma Orientată pe Obiecte.

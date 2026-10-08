@@ -1,4 +1,4 @@
-package core;
+
 import javax.swing.JTextPane;
 import javax.swing.text.*;
 import java.awt.Color;
