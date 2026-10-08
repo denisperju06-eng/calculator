@@ -1,4 +1,6 @@
-package core;
+package core.vizual;
+import core.vizual.*;
+import core.functional.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Desktop;

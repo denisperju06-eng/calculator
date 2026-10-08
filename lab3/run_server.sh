@@ -9,11 +9,11 @@ echo "  Compilare și Pornire Server Chat (POO)  "
 echo "=========================================="
 
 cd "$SRC_DIR" || exit 1
-javac *.java
+javac $(find . -name "*.java")
 
 if [ $? -eq 0 ]; then
     echo "✔ Compilare reușită! Pornire Server GUI..."
-    java Server "$@"
+    java RunServer "$@"
 else
     echo "❌ Eroare la compilare!"
     exit 1

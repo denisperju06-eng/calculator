@@ -1,6 +1,7 @@
-package core;
+package core.functional;
 import java.io.File;
-import core.*;
+import core.vizual.*;
+import core.functional.*;
 import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;

@@ -1,4 +1,6 @@
-package core;
+package core.functional;
+import core.vizual.*;
+import core.functional.*;
 /**
  * Tipul de mesaj transmis în rețeaua locală de chat.
  * Folosit pentru a identifica acțiunea și conținutul fiecărui pachet transmis prin Socket.

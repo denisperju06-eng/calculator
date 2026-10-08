@@ -1,4 +1,6 @@
-package core;
+package core.functional;
+import core.vizual.*;
+import core.functional.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

@@ -1,4 +1,6 @@
-package core;
+package core.functional;
+import core.vizual.*;
+import core.functional.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;

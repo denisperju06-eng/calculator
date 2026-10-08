@@ -9,10 +9,10 @@ echo "  Rulare Teste Automate de Integrare      "
 echo "=========================================="
 
 cd "$SRC_DIR" || exit 1
-javac *.java
+javac $(find . -name "*.java")
 
 if [ $? -eq 0 ]; then
-    java ChatIntegrationTest
+    java RunTest
 else
     echo "❌ Eroare la compilare!"
     exit 1

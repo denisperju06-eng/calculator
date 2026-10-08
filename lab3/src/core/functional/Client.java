@@ -1,6 +1,7 @@
-package core;
+package core.functional;
 import java.io.File;
-import core.*;
+import core.vizual.*;
+import core.functional.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;

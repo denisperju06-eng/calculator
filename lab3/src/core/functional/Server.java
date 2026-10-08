@@ -1,5 +1,6 @@
-package core;
-import core.*;
+package core.functional;
+import core.vizual.*;
+import core.functional.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;

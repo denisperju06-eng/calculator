@@ -1,4 +1,6 @@
-package core;
+package core.functional;
+import core.vizual.*;
+import core.functional.*;
 /**
  * Interfață Observer pentru monitorizarea evenimentelor produse de Server.
  * Permite decuplarea logicii de rețea de interfața grafică ServerGUI.

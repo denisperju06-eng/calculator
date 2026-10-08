@@ -1,4 +1,6 @@
-package core;
+package core.functional;
+import core.vizual.*;
+import core.functional.*;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
