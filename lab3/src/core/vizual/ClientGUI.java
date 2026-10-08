@@ -73,6 +73,9 @@ public class ClientGUI extends JFrame implements ClientListener {
 
     // Istoric mesaje primite în camera curentă
     private final List<Message> currentRoomMessages = new ArrayList<>();
+    // Cache local de mesaje pe camere pentru comutare instantanee și persistență vizuală
+    private final java.util.Map<String, List<Message>> roomMessagesCache = new java.util.concurrent.ConcurrentHashMap<>();
+    private boolean isUpdatingRoomList = false;
 
     public ClientGUI() {
         super("Chat Rețea Locală - Client POO");
@@ -195,9 +198,14 @@ public class ClientGUI extends JFrame implements ClientListener {
         roomsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         roomsList.setFont(new Font("SansSerif", Font.PLAIN, 12));
         roomsList.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
+            if (!e.getValueIsAdjusting() && !isUpdatingRoomList) {
                 String selected = roomsList.getSelectedValue();
                 if (selected != null && !selected.equals(client.getCurrentRoom())) {
+                    // Dacă avem deja mesaje în cache pentru această cameră, le afișăm instantaneu
+                    List<Message> cached = roomMessagesCache.get(selected);
+                    if (cached != null) {
+                        displayMessagesForRoom(selected, cached);
+                    }
                     client.joinRoom(selected);
                 }
             }
@@ -454,6 +462,23 @@ public class ClientGUI extends JFrame implements ClientListener {
         messagesContainer.repaint();
     }
 
+    /**
+     * Încarcă și afișează o listă de mesaje pentru o cameră specificată.
+     */
+    private void displayMessagesForRoom(String room, List<Message> messages) {
+        currentRoomMessages.clear();
+        clearMessagesUI();
+
+        if (messages != null) {
+            currentRoomMessages.addAll(messages);
+            for (Message msg : messages) {
+                addMessageToChatUI(msg);
+            }
+        }
+
+        currentRoomTitle.setText("# " + (room != null ? room : "General"));
+    }
+
     // ================= IMPLEMENTARE ClientListener =================
 
     @Override
@@ -503,8 +528,13 @@ public class ClientGUI extends JFrame implements ClientListener {
     @Override
     public void onMessageReceived(Message message) {
         SwingUtilities.invokeLater(() -> {
-            // Dacă mesajul aparține camerei curente, îl afișăm
-            if (message.getRoom() == null || message.getRoom().equalsIgnoreCase(client.getCurrentRoom())) {
+            String msgRoom = message.getRoom();
+            if (msgRoom != null) {
+                roomMessagesCache.computeIfAbsent(msgRoom, k -> new ArrayList<>()).add(message);
+            }
+
+            // Dacă mesajul aparține camerei curente, îl afișăm direct
+            if (msgRoom == null || msgRoom.equalsIgnoreCase(client.getCurrentRoom())) {
                 currentRoomMessages.add(message);
                 addMessageToChatUI(message);
             }
@@ -514,29 +544,41 @@ public class ClientGUI extends JFrame implements ClientListener {
     @Override
     public void onHistoryReceived(String room, List<Message> history) {
         SwingUtilities.invokeLater(() -> {
-            currentRoomMessages.clear();
-            clearMessagesUI();
-
-            if (history != null) {
-                currentRoomMessages.addAll(history);
-                for (Message msg : history) {
-                    addMessageToChatUI(msg);
-                }
+            List<Message> safeHistory = (history != null) ? new ArrayList<>(history) : new ArrayList<>();
+            if (room != null) {
+                roomMessagesCache.put(room, safeHistory);
             }
 
-            currentRoomTitle.setText("# " + room);
+            // Actualizăm afișajul dacă suntem în camera pentru care a sosit istoricul
+            if (room != null && room.equalsIgnoreCase(client.getCurrentRoom())) {
+                displayMessagesForRoom(room, safeHistory);
+            }
+
+            if (roomsList != null && room != null && !room.equals(roomsList.getSelectedValue())) {
+                isUpdatingRoomList = true;
+                try {
+                    roomsList.setSelectedValue(room, true);
+                } finally {
+                    isUpdatingRoomList = false;
+                }
+            }
         });
     }
 
     @Override
     public void onRoomListUpdated(List<String> rooms) {
         SwingUtilities.invokeLater(() -> {
-            roomsListModel.clear();
-            for (String r : rooms) {
-                roomsListModel.addElement(r);
+            isUpdatingRoomList = true;
+            try {
+                roomsListModel.clear();
+                for (String r : rooms) {
+                    roomsListModel.addElement(r);
+                }
+                // Selectează camera curentă în listă
+                roomsList.setSelectedValue(client.getCurrentRoom(), true);
+            } finally {
+                isUpdatingRoomList = false;
             }
-            // Selectează camera curentă în listă
-            roomsList.setSelectedValue(client.getCurrentRoom(), true);
         });
     }
 

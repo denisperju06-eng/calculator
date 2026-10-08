@@ -61,10 +61,9 @@ def compose(*funcs: Callable[[Any], Any]) -> Callable[[Any], Any]:
     Compunerea matematică a funcțiilor: (f ∘ g ∘ h)(x) = f(g(h(x))).
     
     Exemplu:
-        >>> add1 = lambda x: x + 1
-        >>> sqr = lambda x: x * x
-        >>> compose(add1, sqr)(3)  # sqr(3) = 9 -> add1(9) = 10
-        10
+        add1 = lambda x: x + 1
+        sqr = lambda x: x * x
+        compose(add1, sqr)(3)  # sqr(3) = 9 -> add1(9) = 10 -> 10
     """
     return functools.reduce(
         lambda acc_f, g: lambda *args, **kwargs: acc_f(g(*args, **kwargs)),
@@ -79,8 +78,7 @@ def pipe(initial_val: Any, *funcs: Callable[[Any], Any]) -> Any:
     pipe(x, f, g) == g(f(x)).
     
     Exemplu:
-        >>> pipe(3, lambda x: x * 2, lambda x: x + 1)
-        7
+        pipe(3, lambda x: x * 2, lambda x: x + 1)  # => 7
     """
     return functools.reduce(lambda acc, f: f(acc), funcs, initial_val)
 
@@ -91,10 +89,9 @@ def curry(func: Callable) -> Callable:
     Transformă o funcție f(a, b, c) într-o funcție f(a)(b)(c).
     
     Exemplu:
-        >>> add = curry(lambda a, b: a + b)
-        >>> add5 = add(5)
-        >>> add5(10)
-        15
+        add = curry(lambda a, b: a + b)
+        add5 = add(5)
+        add5(10)  # => 15
     """
     num_args = func.__code__.co_argcount
 
@@ -167,12 +164,9 @@ def squares_up_to(n: int, include_zero: bool = False) -> Tuple[int, ...]:
       - Spațiu: O(N) imutabil
       
     Exemple:
-        >>> squares_up_to(5)
-        (1, 4, 9, 16, 25)
-        >>> squares_up_to(4, include_zero=True)
-        (0, 1, 4, 9, 16)
-        >>> squares_up_to(0)
-        ()
+        squares_up_to(5)                        -> (1, 4, 9, 16, 25)
+        squares_up_to(4, include_zero=True)     -> (0, 1, 4, 9, 16)
+        squares_up_to(0)                        -> ()
     """
     if n < 0:
         return ()
@@ -216,10 +210,8 @@ def factorial(k: int) -> int:
     Proprietate: 0! = 1, k! = 1 * 2 * ... * k.
     
     Exemple:
-        >>> factorial(0)
-        1
-        >>> factorial(5)
-        120
+        factorial(0) -> 1
+        factorial(5) -> 120
     """
     if k < 0:
         raise ValueError("Factorialul nu este definit pentru numere negative.")
@@ -235,10 +227,8 @@ def factorials_up_to(n: int, include_zero: bool = True) -> Tuple[int, ...]:
     Implementare funcțională pură prin `map` de ordin superior.
     
     Exemple:
-        >>> factorials_up_to(5)
-        (1, 1, 2, 6, 24, 120)
-        >>> factorials_up_to(5, include_zero=False)
-        (1, 2, 6, 24, 120)
+        factorials_up_to(5)                     -> (1, 1, 2, 6, 24, 120)
+        factorials_up_to(5, include_zero=False) -> (1, 2, 6, 24, 120)
     """
     if n < 0:
         return ()
@@ -293,14 +283,10 @@ def series_product(x: float | int, n: int) -> float | int:
     prin `reduce`, acceptând și calculul direct pur.
     
     Exemple:
-        >>> series_product(4, 5)
-        20
-        >>> series_product(3.5, 2)
-        7.0
-        >>> series_product(7, 0)
-        0
-        >>> series_product(6, -3)
-        -18
+        series_product(4, 5)    -> 20
+        series_product(3.5, 2)  -> 7.0
+        series_product(7, 0)    -> 0
+        series_product(6, -3)   -> -18
     """
     if n == 0 or x == 0:
         return 0
@@ -339,12 +325,9 @@ def series_sum_linear(n: int) -> int:
     Proprietate matematică: sum_{i=1}^n i = n * (n + 1) / 2 (numere triunghiulare).
     
     Exemple:
-        >>> series_sum_linear(0)
-        0
-        >>> series_sum_linear(5)  # 1 + 2 + 3 + 4 + 5 = 15
-        15
-        >>> series_sum_linear(10)
-        55
+        series_sum_linear(0)   -> 0
+        series_sum_linear(5)   -> 15  (1 + 2 + 3 + 4 + 5)
+        series_sum_linear(10)  -> 55
     """
     if n <= 0:
         return 0
@@ -375,14 +358,10 @@ def series_sum_triangular(n: int) -> int:
       reduce(+, map(series_sum_linear, 1..n), 0)
       
     Exemple:
-        >>> series_sum_triangular(0)
-        0
-        >>> series_sum_triangular(1)  # F2(1) = 1
-        1
-        >>> series_sum_triangular(3)  # F2(1) + F2(2) + F2(3) = 1 + 3 + 6 = 10
-        10
-        >>> series_sum_triangular(4)  # 10 + F2(4) = 10 + 10 = 20
-        20
+        series_sum_triangular(0) -> 0
+        series_sum_triangular(1) -> 1   (F2(1) = 1)
+        series_sum_triangular(3) -> 10  (F2(1) + F2(2) + F2(3) = 1 + 3 + 6)
+        series_sum_triangular(4) -> 20  (10 + F2(4) = 10 + 10)
     """
     if n <= 0:
         return 0
@@ -434,12 +413,9 @@ def GetN(L: Sequence[T], n: int, one_indexed: bool = False) -> T:
       fără indexare directă sau mutație de variabilă.
       
     Exemple:
-        >>> GetN(('a', 'b', 'c', 'd'), 2)
-        'c'
-        >>> GetN(('a', 'b', 'c', 'd'), 1, one_indexed=True)
-        'a'
-        >>> GetN([10, 20, 30], 0)
-        10
+        GetN(('a', 'b', 'c', 'd'), 2)                  -> 'c'
+        GetN(('a', 'b', 'c', 'd'), 1, one_indexed=True) -> 'a'
+        GetN([10, 20, 30], 0)                          -> 10
     """
     target_idx = n - 1 if one_indexed else n
 
@@ -497,12 +473,9 @@ def Set(L: Sequence[Any], deep: bool = False) -> Tuple[Any, ...]:
               conform conceptului de 'atom' din Lisp / Prolog).
               
     Exemple:
-        >>> Set((1, 2, 2, 3, 1, 4, 3))
-        (1, 2, 3, 4)
-        >>> Set(['a', 'b', 'a', 'c', 'b'])
-        ('a', 'b', 'c')
-        >>> Set([1, [2, 3], 2, [3, 4]], deep=True)
-        (1, 2, 3, 4)
+        Set((1, 2, 2, 3, 1, 4, 3))            -> (1, 2, 3, 4)
+        Set(['a', 'b', 'a', 'c', 'b'])        -> ('a', 'b', 'c')
+        Set([1, [2, 3], 2, [3, 4]], deep=True) -> (1, 2, 3, 4)
     """
     def _flatten_atoms(items: Iterable[Any]) -> Tuple[Any, ...]:
         """Aplatizare recursivă funcțională a atomilor dintr-o structură imbricată."""
@@ -559,12 +532,9 @@ def OddEven(L: Sequence[T], mode: str = "index") -> Tuple[T, ...]:
     Implementarea este pur recursivă, fără cicluri for/while și fără mutații.
     
     Exemple:
-        >>> OddEven((1, 2, 3, 4, 5, 6))
-        (2, 1, 4, 3, 6, 5)
-        >>> OddEven(('a', 'b', 'c', 'd', 'e'))
-        ('b', 'a', 'd', 'c', 'e')
-        >>> OddEven((2, 1, 4, 3), mode="value")
-        (1, 2, 3, 4)
+        OddEven((1, 2, 3, 4, 5, 6))           -> (2, 1, 4, 3, 6, 5)
+        OddEven(('a', 'b', 'c', 'd', 'e'))     -> ('b', 'a', 'd', 'c', 'e')
+        OddEven((2, 1, 4, 3), mode="value")   -> (1, 2, 3, 4)
     """
     if mode == "index":
         return _odd_even_by_index(L)
@@ -623,14 +593,10 @@ def FuncList(
     Implementare funcțională pură prin `map` și `zip` (sau recursivitate structurală).
     
     Exemple:
-        >>> FuncList((1, 2, 3), (10, 20, 30), lambda x, y: x + y)
-        (11, 22, 33)
-        >>> FuncList((2, 3, 4), (5, 6, 7), lambda x, y: x * y)
-        (10, 18, 28)
-        >>> FuncList((10, 20), (3, 5), operator.sub)
-        (7, 15)
-        >>> FuncList((1, 2, 3), (4, 5, 6))  # operator.add implicit
-        (5, 7, 9)
+        FuncList((1, 2, 3), (10, 20, 30), lambda x, y: x + y) -> (11, 22, 33)
+        FuncList((2, 3, 4), (5, 6, 7), lambda x, y: x * y)     -> (10, 18, 28)
+        FuncList((10, 20), (3, 5), operator.sub)              -> (7, 15)
+        FuncList((1, 2, 3), (4, 5, 6))                         -> (5, 7, 9)
     """
     return tuple(map(lambda pair: F(pair[0], pair[1]), zip(L1, L2)))
 
@@ -661,8 +627,7 @@ def func_list_sum(
     este interpretată ca returnând suma scalară totală: sum(F(L1[i], L2[i])).
     
     Exemplu:
-        >>> func_list_sum((1, 2, 3), (4, 5, 6), operator.mul)  # 1*4 + 2*5 + 3*6 = 4 + 10 + 18 = 32
-        32
+        func_list_sum((1, 2, 3), (4, 5, 6), operator.mul) -> 32  # (1*4 + 2*5 + 3*6 = 4 + 10 + 18 = 32)
     """
     res_list = FuncList(L1, L2, F)
     if not res_list:

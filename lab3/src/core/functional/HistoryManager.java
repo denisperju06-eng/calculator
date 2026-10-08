@@ -24,9 +24,47 @@ public class HistoryManager {
     private final File storageDir;
 
     public HistoryManager(String baseDirPath) {
-        this.storageDir = new File(baseDirPath, "server_history");
+        File baseDir = new File(baseDirPath != null ? baseDirPath : System.getProperty("user.dir"));
+        // Căutăm directorul server_history în folderul curent sau în directorul rădăcină (dacă suntem în src)
+        File candidateCurrent = new File(baseDir, "server_history");
+        File candidateParent = (baseDir.getName().equals("src") && baseDir.getParentFile() != null)
+                ? new File(baseDir.getParentFile(), "server_history")
+                : null;
+
+        if (candidateCurrent.exists()) {
+            this.storageDir = candidateCurrent;
+        } else if (candidateParent != null && candidateParent.exists()) {
+            this.storageDir = candidateParent;
+        } else {
+            this.storageDir = candidateCurrent;
+        }
         if (!storageDir.exists()) {
             storageDir.mkdirs();
+        }
+    }
+
+    /**
+     * Flux ObjectInputStream compatibil ce mapează transparent denumirile vechi de clase
+     * (core.Message, Message etc.) către noul pachet core.functional.Message.
+     */
+    private static class CompatibleObjectInputStream extends ObjectInputStream {
+        public CompatibleObjectInputStream(java.io.InputStream in) throws IOException {
+            super(in);
+        }
+
+        @Override
+        protected Class<?> resolveClass(java.io.ObjectStreamClass desc) throws IOException, ClassNotFoundException {
+            String name = desc.getName();
+            if ("core.Message".equals(name) || "Message".equals(name)) {
+                return core.functional.Message.class;
+            }
+            if ("core.MessageType".equals(name) || "MessageType".equals(name)) {
+                return core.functional.MessageType.class;
+            }
+            if ("core.FileAttachment".equals(name) || "FileAttachment".equals(name)) {
+                return core.functional.FileAttachment.class;
+            }
+            return super.resolveClass(desc);
         }
     }
 
@@ -72,7 +110,7 @@ public class HistoryManager {
 
         // 2. Salvare binară pentru reîncărcare la repornirea serverului
         File binaryFile = new File(storageDir, "chat_" + safeRoomName + ".dat");
-        List<Message> existing = loadBinaryHistory(safeRoomName);
+        List<Message> existing = loadBinaryHistory(message.getRoom());
         existing.add(message);
         if (existing.size() > 500) {
             existing.remove(0); // păstrăm ultimele 500 mesaje pe disc
@@ -85,24 +123,63 @@ public class HistoryManager {
     }
 
     /**
-     * Încarcă istoricul salvat pentru o cameră specificată.
+     * Încarcă istoricul salvat pentru o cameră specificată prin numele său.
      */
-    @SuppressWarnings("unchecked")
     public synchronized List<Message> loadBinaryHistory(String roomName) {
         String safeRoomName = roomName.replaceAll("[^a-zA-Z0-9._-]", "_");
         File binaryFile = new File(storageDir, "chat_" + safeRoomName + ".dat");
-        if (!binaryFile.exists() || binaryFile.length() == 0) {
+        return loadBinaryHistoryFromFile(binaryFile);
+    }
+
+    /**
+     * Încarcă istoricul dintr-un fișier .dat concret cu filtrare și mapare de siguranță.
+     */
+    public synchronized List<Message> loadBinaryHistoryFromFile(File binaryFile) {
+        if (binaryFile == null || !binaryFile.exists() || binaryFile.length() == 0) {
             return new ArrayList<>();
         }
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(binaryFile))) {
+        try (CompatibleObjectInputStream ois = new CompatibleObjectInputStream(new FileInputStream(binaryFile))) {
             Object obj = ois.readObject();
             if (obj instanceof List<?>) {
-                return (List<Message>) obj;
+                List<?> rawList = (List<?>) obj;
+                List<Message> cleanList = new ArrayList<>();
+                for (Object item : rawList) {
+                    if (item instanceof Message) {
+                        cleanList.add((Message) item);
+                    }
+                }
+                return cleanList;
             }
         } catch (Exception e) {
-            System.err.println("[HistoryManager] Nu s-a putut citi istoricul binar pentru " + roomName + ": " + e.getMessage());
+            System.err.println("[HistoryManager] Nu s-a putut citi istoricul binar din " + binaryFile.getName() + ": " + e.getMessage());
         }
         return new ArrayList<>();
+    }
+
+    /**
+     * Descoperă toate camerele existente pe disc analizând fișierele de istoric.
+     */
+    public synchronized List<String> discoverRoomsOnDisk() {
+        List<String> discoveredRooms = new ArrayList<>();
+        File[] datFiles = storageDir.listFiles((dir, name) -> name.startsWith("chat_") && name.endsWith(".dat"));
+        if (datFiles != null) {
+            for (File file : datFiles) {
+                List<Message> history = loadBinaryHistoryFromFile(file);
+                if (!history.isEmpty()) {
+                    String roomName = history.get(0).getRoom();
+                    if (roomName != null && !roomName.trim().isEmpty() && !discoveredRooms.contains(roomName.trim())) {
+                        discoveredRooms.add(roomName.trim());
+                    }
+                } else {
+                    String fn = file.getName();
+                    String fallbackName = fn.substring("chat_".length(), fn.length() - ".dat".length()).replace('_', ' ');
+                    if (!discoveredRooms.contains(fallbackName)) {
+                        discoveredRooms.add(fallbackName);
+                    }
+                }
+            }
+        }
+        return discoveredRooms;
     }
 
     /**

@@ -120,6 +120,9 @@ public class Client {
                 break;
 
             case HISTORY_RESPONSE:
+                if (msg.getRoom() != null && !msg.getRoom().trim().isEmpty()) {
+                    this.currentRoom = msg.getRoom().trim();
+                }
                 if (msg.getHistoryList() != null) {
                     notifyHistoryReceived(msg.getRoom(), msg.getHistoryList());
                 }
@@ -180,7 +183,8 @@ public class Client {
      */
     public void createRoom(String roomName) {
         if (!isConnected || roomName == null || roomName.trim().isEmpty()) return;
-        sendMessage(Message.createCreateRoomMessage(username, roomName.trim()));
+        this.currentRoom = roomName.trim();
+        sendMessage(Message.createCreateRoomMessage(username, currentRoom));
     }
 
     /**

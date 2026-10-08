@@ -216,7 +216,88 @@ public class ChatIntegrationTest {
             if (!foundHistory) {
                 throw new RuntimeException("Istoricul camerei nu include mesajele anterioare!");
             }
-            System.out.println("✔ [6/6] Camere de chat (Chat Rooms) și Istoricul (History) validate cu succes!");
+            System.out.println("✔ [6/7] Camere de chat (Chat Rooms) și Istoricul (History) validate cu succes!");
+
+            // 7. Test comutare între camere preexistente (create automat) și persistență istoric
+            // Alice intră în 'Laborator POO'
+            alice.joinRoom("Laborator POO");
+            // Bob intră în 'Proiecte'
+            bob.joinRoom("Proiecte");
+            Thread.sleep(300);
+
+            // Alice trimite un mesaj în 'Laborator POO' în timp ce Bob este în 'Proiecte'
+            String testExistingRoomMsg = "Mesaj important laborator de la Alice - " + System.currentTimeMillis();
+            alice.sendTextMessage(testExistingRoomMsg, null);
+            Thread.sleep(400);
+
+            // Bob comută în 'Laborator POO' și trebuie să vadă mesajul trimis de Alice
+            CountDownLatch bobLabHistoryLatch = new CountDownLatch(1);
+            AtomicReference<List<Message>> bobLabHistory = new AtomicReference<>();
+
+            bob.addListener(new DummyListener() {
+                @Override
+                public void onHistoryReceived(String room, List<Message> history) {
+                    if ("Laborator POO".equals(room)) {
+                        bobLabHistory.set(history);
+                        bobLabHistoryLatch.countDown();
+                    }
+                }
+            });
+
+            bob.joinRoom("Laborator POO");
+            if (!bobLabHistoryLatch.await(3, TimeUnit.SECONDS)) {
+                throw new RuntimeException("Bob nu a primit istoricul camerei 'Laborator POO' la comutare!");
+            }
+
+            boolean bobSawAliceMsg = false;
+            for (Message m : bobLabHistory.get()) {
+                if (testExistingRoomMsg.equals(m.getContent())) {
+                    bobSawAliceMsg = true;
+                    break;
+                }
+            }
+            if (!bobSawAliceMsg) {
+                throw new RuntimeException("Mesajul trimis în camera preexistentă nu a fost găsit în istoric de către celălalt utilizator la comutare!");
+            }
+
+            // Bob trimite un mesaj de confirmare în 'Laborator POO'
+            String bobReplyInLab = "Mesaj Bob în laborator - " + System.currentTimeMillis();
+            bob.sendTextMessage(bobReplyInLab, null);
+            Thread.sleep(400);
+
+            // Alice se mută în altă cameră ('General') și apoi revine în 'Laborator POO'
+            alice.joinRoom("General");
+            Thread.sleep(300);
+
+            CountDownLatch aliceReturnHistoryLatch = new CountDownLatch(1);
+            AtomicReference<List<Message>> aliceReturnHistory = new AtomicReference<>();
+
+            alice.addListener(new DummyListener() {
+                @Override
+                public void onHistoryReceived(String room, List<Message> history) {
+                    if ("Laborator POO".equals(room)) {
+                        aliceReturnHistory.set(history);
+                        aliceReturnHistoryLatch.countDown();
+                    }
+                }
+            });
+
+            alice.joinRoom("Laborator POO");
+            if (!aliceReturnHistoryLatch.await(3, TimeUnit.SECONDS)) {
+                throw new RuntimeException("Alice nu a primit istoricul la revenirea în 'Laborator POO'!");
+            }
+
+            boolean aliceSawBobMsg = false;
+            boolean aliceSawOwnMsg = false;
+            for (Message m : aliceReturnHistory.get()) {
+                if (testExistingRoomMsg.equals(m.getContent())) aliceSawOwnMsg = true;
+                if (bobReplyInLab.equals(m.getContent())) aliceSawBobMsg = true;
+            }
+
+            if (!aliceSawOwnMsg || !aliceSawBobMsg) {
+                throw new RuntimeException("La revenirea în camera 'Laborator POO', mesajele nu sunt păstrate în istoric! (own: " + aliceSawOwnMsg + ", bob: " + aliceSawBobMsg + ")");
+            }
+            System.out.println("✔ [7/7] Comutare camere preexistente și persistență permanentă a istoricului validate cu succes!");
 
             // Curățare
             tempTestFile.delete();

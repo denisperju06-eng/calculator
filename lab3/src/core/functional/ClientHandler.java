@@ -52,10 +52,7 @@ public class ClientHandler extends Thread {
             server.registerClient(this);
             server.log("Client conectat: " + username + " de la " + socket.getRemoteSocketAddress());
 
-            // Trimitem lista curentă de camere către noul client
-            sendMessage(Message.createRoomListMessage(server.getRoomNames()));
-
-            // Alăturăm clientul la camera de pornire "General"
+            // Alăturăm clientul la camera de pornire "General" (trimite automat și lista de camere + istoricul)
             server.joinRoom(this, "General");
 
             // Bucla principală de recepție mesaje
@@ -105,14 +102,18 @@ public class ClientHandler extends Thread {
                 break;
 
             case JOIN_ROOM:
-                String targetRoom = msg.getContent() != null ? msg.getContent().replace("Join ", "").trim() : msg.getRoom();
+                String targetRoom = (msg.getRoom() != null && !msg.getRoom().trim().isEmpty())
+                        ? msg.getRoom().trim()
+                        : (msg.getContent() != null ? msg.getContent().replace("Join ", "").trim() : null);
                 if (targetRoom != null && !targetRoom.isEmpty()) {
                     server.joinRoom(this, targetRoom);
                 }
                 break;
 
             case CREATE_ROOM:
-                String newRoom = msg.getContent() != null ? msg.getContent().replace("Create ", "").trim() : null;
+                String newRoom = (msg.getRoom() != null && !msg.getRoom().trim().isEmpty())
+                        ? msg.getRoom().trim()
+                        : (msg.getContent() != null ? msg.getContent().replace("Create ", "").trim() : null);
                 if (newRoom != null && !newRoom.trim().isEmpty()) {
                     server.createRoom(newRoom.trim());
                     // Alăturăm direct utilizatorul creator la noua cameră
@@ -141,7 +142,7 @@ public class ClientHandler extends Thread {
      * Trimite un mesaj către client prin Socket în mod sincronizat și sigur.
      */
     public synchronized boolean sendMessage(Message message) {
-        if (!isRunning || out == null) return false;
+        if (!isRunning || out == null || socket.isClosed()) return false;
         try {
             out.writeObject(message);
             out.flush();

@@ -43,7 +43,7 @@ public class Server {
     }
 
     /**
-     * Inițializează camerele de chat implicite și reîncarcă istoricul existent.
+     * Inițializează camerele de chat implicite și reîncarcă istoricul existent de pe disc.
      */
     private void initializeDefaultRooms() {
         String[] defaultRoomNames = {"General", "Laborator POO", "Proiecte", "Discuții Libere"};
@@ -54,6 +54,19 @@ public class Server {
                 room.loadHistory(savedHistory);
             }
             rooms.put(name, room);
+        }
+
+        // Descoperim și restaurăm și alte camere existente pe disc
+        for (String diskRoom : historyManager.discoverRoomsOnDisk()) {
+            if (!rooms.containsKey(diskRoom)) {
+                ChatRoom room = new ChatRoom(diskRoom);
+                List<Message> savedHistory = historyManager.loadBinaryHistory(diskRoom);
+                if (!savedHistory.isEmpty()) {
+                    room.loadHistory(savedHistory);
+                }
+                rooms.put(diskRoom, room);
+                log("A fost restaurată camera din istoric: " + diskRoom);
+            }
         }
     }
 
@@ -146,20 +159,26 @@ public class Server {
     }
 
     /**
-     * Creează o nouă cameră de chat dacă nu există deja.
+     * Creează o nouă cameră de chat dacă nu există deja și încarcă istoricul salvat.
      */
     public synchronized boolean createRoom(String roomName) {
         if (roomName == null || roomName.trim().isEmpty()) return false;
         String trimmed = roomName.trim();
         if (!rooms.containsKey(trimmed)) {
             ChatRoom newRoom = new ChatRoom(trimmed);
+            List<Message> savedHistory = historyManager.loadBinaryHistory(trimmed);
+            if (!savedHistory.isEmpty()) {
+                newRoom.loadHistory(savedHistory);
+            }
             rooms.put(trimmed, newRoom);
-            log("A fost creată camera nouă: " + trimmed);
+            log("A fost creată camera: " + trimmed + (savedHistory.isEmpty() ? "" : " (istoric: " + savedHistory.size() + " mesaje)"));
             broadcastRoomList();
             notifyRoomCreated(trimmed);
             return true;
+        } else {
+            broadcastRoomList();
+            return false;
         }
-        return false;
     }
 
     /**
@@ -169,12 +188,21 @@ public class Server {
         if (targetRoomName == null || targetRoomName.trim().isEmpty()) return;
         targetRoomName = targetRoomName.trim();
 
-        // Dacă nu există camera, o creăm automat
+        // Dacă nu există camera, o creăm automat (încărcând și istoricul existent dacă există pe disc)
         if (!rooms.containsKey(targetRoomName)) {
             createRoom(targetRoomName);
         }
 
         String oldRoomName = client.getCurrentRoom();
+        if (targetRoomName.equals(oldRoomName)) {
+            // Clientul este deja în această cameră; trimitem istoricul la zi
+            ChatRoom currentRoom = rooms.get(targetRoomName);
+            if (currentRoom != null) {
+                client.sendMessage(Message.createHistoryResponseMessage(targetRoomName, currentRoom.getHistory()));
+            }
+            return;
+        }
+
         if (oldRoomName != null && rooms.containsKey(oldRoomName)) {
             ChatRoom oldRoom = rooms.get(oldRoomName);
             oldRoom.removeParticipant(client);
@@ -187,7 +215,7 @@ public class Server {
         newRoom.addParticipant(client);
         client.setCurrentRoom(targetRoomName);
 
-        // Notificăm clientul cu lista de camere actuală și cu istoricul camerei noi
+        // Notificăm clientul cu lista de camere actuală și cu istoricul complet al noii camere
         client.sendMessage(Message.createRoomListMessage(getRoomNames()));
         client.sendMessage(Message.createHistoryResponseMessage(targetRoomName, newRoom.getHistory()));
 

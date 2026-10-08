@@ -36,7 +36,7 @@ public class ReplyPanel extends JPanel {
         add(replyLabel, BorderLayout.CENTER);
 
         cancelButton = new JButton("✕");
-        cancelButton.setFont(new Font("SansSerif", Font.BOLD, 12));
+        cancelButton.setFont(new Font("SansSerif", Font.ITALIC, 12));
         cancelButton.setForeground(new Color(120, 130, 140));
         cancelButton.setBorderPainted(false);
         cancelButton.setContentAreaFilled(false);

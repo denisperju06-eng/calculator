@@ -1,10 +1,130 @@
-[16.09.2026 08:49:37] <SISTEM> Student_113 s-a alăturat camerei.
-[16.09.2026 08:49:41] <Student_113> afafadfa
-[16.09.2026 08:49:50] <SISTEM> Student_785 s-a alăturat camerei.
-[16.09.2026 08:49:56] <Student_785> hui sosi
-[16.09.2026 08:50:02] <SISTEM> Student_113 a părăsit camera.
-[16.09.2026 08:50:03] <SISTEM> Student_113 s-a alăturat camerei.
-[16.09.2026 08:50:03] <SISTEM> Student_113 a părăsit camera.
-[16.09.2026 08:50:04] <SISTEM> Student_113 s-a alăturat camerei.
-[16.09.2026 08:50:04] <SISTEM> Student_113 a părăsit camera.
-[16.09.2026 08:50:30] <SISTEM> Student_785 a părăsit camera.
+[15.09.2026 22:58:16] <SISTEM> Student_769 s-a alăturat camerei.
+[15.09.2026 22:58:27] <Student_769> hi
+[15.09.2026 22:58:52] <SISTEM> Student_769 a părăsit camera.
+[15.09.2026 22:58:53] <SISTEM> Student_769 s-a alăturat camerei.
+[15.09.2026 22:58:54] <SISTEM> Student_769 a părăsit camera.
+[16.09.2026 08:40:39] <SISTEM> Alice s-a alăturat camerei.
+[16.09.2026 08:40:39] <SISTEM> Bob s-a alăturat camerei.
+[16.09.2026 08:40:38] <Alice> Salut Bob! Acesta este un test.
+[16.09.2026 08:40:39] <Bob> [Răspuns către @Alice: "Salut Bob! Acesta este un test."] Salut Alice! Răspund la mesajul tău.
+[16.09.2026 08:40:39] <Alice> [FIȘIER: test_upload_15912033971886095212.txt (73 B)]
+[16.09.2026 08:40:39] <SISTEM> Alice a părăsit camera.
+[16.09.2026 08:40:39] <SISTEM> Bob a părăsit camera.
+[18.09.2026 11:46:41] <SISTEM> Student_621 s-a alăturat camerei.
+[18.09.2026 11:46:48] <SISTEM> Student_344 s-a alăturat camerei.
+[18.09.2026 11:47:34] <Student_621> [FIȘIER: desen.png (3.2 KB)]
+[18.09.2026 11:47:57] <Student_344> [Răspuns către @Student_621: "[Fișier: desen.png]"] ertjghkj
+[18.09.2026 11:48:21] <SISTEM> Alice s-a alăturat camerei.
+[18.09.2026 11:48:21] <SISTEM> Bob s-a alăturat camerei.
+[18.09.2026 11:48:21] <Alice> Salut Bob! Acesta este un test.
+[18.09.2026 11:48:21] <Bob> [Răspuns către @Alice: "Salut Bob! Acesta este un test."] Salut Alice! Răspund la mesajul tău.
+[18.09.2026 11:48:21] <Alice> [FIȘIER: test_upload_4950396522766007452.txt (73 B)]
+[18.09.2026 11:48:21] <SISTEM> Alice a părăsit camera.
+[18.09.2026 11:48:22] <SISTEM> Bob a părăsit camera.
+[18.09.2026 11:48:33] <SISTEM> Student_344 a părăsit camera.
+[18.09.2026 11:48:39] <SISTEM> Student_344 s-a alăturat camerei.
+[18.09.2026 11:48:39] <SISTEM> Student_344 a părăsit camera.
+[18.09.2026 11:50:04] <SISTEM> Student_621 a părăsit camera.
+[18.09.2026 11:50:21] <SISTEM> Student_621 s-a alăturat camerei.
+[18.09.2026 11:50:23] <SISTEM> Student_344 s-a alăturat camerei.
+[18.09.2026 11:50:25] <SISTEM> Student_621 a părăsit camera.
+[18.09.2026 11:50:27] <SISTEM> Student_621 s-a alăturat camerei.
+[18.09.2026 11:50:39] <Student_344> Salut Alice! Răspund la mesajul tău.
+[18.09.2026 12:14:44] <SISTEM> Student_344 a părăsit camera.
+[18.09.2026 12:14:44] <SISTEM> Student_621 a părăsit camera.
+[18.09.2026 12:15:09] <SISTEM> Student_621 s-a alăturat camerei.
+[18.09.2026 12:15:12] <SISTEM> Student_621 a părăsit camera.
+[18.09.2026 12:15:17] <SISTEM> Student_621 s-a alăturat camerei.
+[18.09.2026 12:15:29] <SISTEM> Student_344 s-a alăturat camerei.
+[18.09.2026 12:15:33] <SISTEM> Student_344 a părăsit camera.
+[18.09.2026 12:15:33] <SISTEM> Student_621 a părăsit camera.
+[18.09.2026 12:15:46] <SISTEM> Student_344 s-a alăturat camerei.
+[18.09.2026 12:15:48] <SISTEM> Student_621 s-a alăturat camerei.
+[23.09.2026 12:20:01] <SISTEM> Student_478 s-a alăturat camerei.
+[23.09.2026 12:20:02] <SISTEM> Student_224 s-a alăturat camerei.
+[23.09.2026 12:20:39] <SISTEM> Bob s-a alăturat camerei.
+[23.09.2026 12:20:39] <SISTEM> Alice s-a alăturat camerei.
+[23.09.2026 12:20:39] <Alice> Salut Bob! Acesta este un test.
+[23.09.2026 12:20:39] <Bob> [Răspuns către @Alice: "Salut Bob! Acesta este un test."] Salut Alice! Răspund la mesajul tău.
+[23.09.2026 12:20:39] <Alice> [FIȘIER: test_upload_4365207234762810359.txt (73 B)]
+[23.09.2026 12:20:39] <SISTEM> Alice a părăsit camera.
+[23.09.2026 12:20:40] <SISTEM> Bob a părăsit camera.
+[23.09.2026 12:23:10] <Student_478> hi
+[23.09.2026 12:23:13] <Student_224> hi
+[23.09.2026 12:23:20] <Student_478> how a u
+[23.09.2026 12:23:54] <SISTEM> Student_478 a părăsit camera.
+[23.09.2026 12:23:56] <SISTEM> Student_478 s-a alăturat camerei.
+[23.09.2026 12:23:56] <SISTEM> Student_478 a părăsit camera.
+[23.09.2026 12:23:59] <SISTEM> Student_478 s-a alăturat camerei.
+[23.09.2026 12:27:55] <SISTEM> Student_478 a părăsit camera.
+[23.09.2026 12:27:56] <SISTEM> Student_224 a părăsit camera.
+[30.09.2026 13:25:07] <SISTEM> Student_427 s-a alăturat camerei.
+[30.09.2026 13:25:10] <SISTEM> Student_905 s-a alăturat camerei.
+[30.09.2026 13:25:15] <Student_905> salut
+[30.09.2026 13:25:19] <Student_427> salut
+[30.09.2026 13:25:21] <SISTEM> Student_427 a părăsit camera.
+[30.09.2026 13:25:23] <SISTEM> Student_427 s-a alăturat camerei.
+[30.09.2026 13:25:26] <SISTEM> Student_427 a părăsit camera.
+[30.09.2026 13:25:37] <Student_905> [Răspuns către @Student_427: "salut"] ce faci
+[30.09.2026 13:25:41] <SISTEM> Student_427 s-a alăturat camerei.
+[30.09.2026 13:25:46] <SISTEM> Student_427 a părăsit camera.
+[30.09.2026 13:25:48] <SISTEM> Student_427 s-a alăturat camerei.
+[30.09.2026 13:25:55] <Student_905> ce faci
+[30.09.2026 13:25:59] <SISTEM> Student_427 a părăsit camera.
+[30.09.2026 13:26:00] <SISTEM> Student_427 s-a alăturat camerei.
+[30.09.2026 13:26:08] <Student_427> sal
+[30.09.2026 13:26:13] <SISTEM> Student_427 a părăsit camera.
+[30.09.2026 13:26:16] <SISTEM> Student_427 s-a alăturat camerei.
+[30.09.2026 13:26:16] <SISTEM> Student_427 a părăsit camera.
+[30.09.2026 13:26:17] <SISTEM> Student_427 s-a alăturat camerei.
+[30.09.2026 13:26:18] <SISTEM> Student_427 a părăsit camera.
+[30.09.2026 13:26:20] <SISTEM> Student_427 s-a alăturat camerei.
+[30.09.2026 13:26:27] <SISTEM> Student_905 a părăsit camera.
+[30.09.2026 13:26:28] <SISTEM> Student_905 s-a alăturat camerei.
+[30.09.2026 13:26:30] <SISTEM> Student_905 a părăsit camera.
+[30.09.2026 13:26:36] <SISTEM> Student_905 s-a alăturat camerei.
+[30.09.2026 13:26:39] <SISTEM> Student_905 a părăsit camera.
+[30.09.2026 13:26:51] <SISTEM> Student_905 s-a alăturat camerei.
+[30.09.2026 13:26:53] <SISTEM> Student_427 a părăsit camera.
+[30.09.2026 13:26:55] <SISTEM> Student_427 s-a alăturat camerei.
+[30.09.2026 13:27:03] <Student_905> a
+[30.09.2026 13:27:07] <Student_905> a
+[30.09.2026 13:27:11] <Student_905> b
+[30.09.2026 13:27:12] <SISTEM> Student_427 a părăsit camera.
+[30.09.2026 13:27:16] <SISTEM> Student_905 a părăsit camera.
+[30.09.2026 13:27:17] <SISTEM> Student_905 s-a alăturat camerei.
+[30.09.2026 13:27:18] <SISTEM> Student_905 a părăsit camera.
+[30.09.2026 13:28:08] <SISTEM> Student_427 s-a alăturat camerei.
+[30.09.2026 13:28:13] <SISTEM> Student_427 a părăsit camera.
+[30.09.2026 13:28:36] <SISTEM> Student_634 s-a alăturat camerei.
+[30.09.2026 13:28:37] <SISTEM> Student_134 s-a alăturat camerei.
+[30.09.2026 13:28:38] <SISTEM> Student_134 a părăsit camera.
+[30.09.2026 13:28:39] <SISTEM> Student_134 s-a alăturat camerei.
+[30.09.2026 13:28:46] <Student_634> a
+[30.09.2026 13:28:49] <SISTEM> Student_634 a părăsit camera.
+[30.09.2026 13:28:49] <SISTEM> Student_634 s-a alăturat camerei.
+[30.09.2026 13:28:50] <SISTEM> Student_634 a părăsit camera.
+[30.09.2026 13:28:54] <SISTEM> Student_134 a părăsit camera.
+[30.09.2026 13:28:55] <SISTEM> Student_134 s-a alăturat camerei.
+[30.09.2026 13:28:55] <SISTEM> Student_134 a părăsit camera.
+[30.09.2026 13:28:55] <SISTEM> Student_134 s-a alăturat camerei.
+[30.09.2026 13:28:56] <SISTEM> Student_134 a părăsit camera.
+[30.09.2026 13:29:03] <SISTEM> Student_634 s-a alăturat camerei.
+[30.09.2026 13:29:03] <SISTEM> Student_634 a părăsit camera.
+[30.09.2026 13:29:04] <SISTEM> Student_634 s-a alăturat camerei.
+[30.09.2026 13:29:04] <SISTEM> Student_634 a părăsit camera.
+[30.09.2026 13:29:06] <SISTEM> Student_634 s-a alăturat camerei.
+[30.09.2026 13:29:07] <SISTEM> Student_634 a părăsit camera.
+[30.09.2026 13:29:34] <SISTEM> Student_134 s-a alăturat camerei.
+[30.09.2026 13:29:36] <SISTEM> Student_134 a părăsit camera.
+[30.09.2026 13:29:38] <SISTEM> Student_634 s-a alăturat camerei.
+[30.09.2026 13:29:39] <SISTEM> Student_634 a părăsit camera.
+[30.09.2026 13:36:48] <SISTEM> Alice s-a alăturat camerei.
+[30.09.2026 13:36:48] <SISTEM> Bob s-a alăturat camerei.
+[30.09.2026 13:36:48] <Alice> Salut Bob! Acesta este un test.
+[30.09.2026 13:36:48] <Bob> [Răspuns către @Alice: "Salut Bob! Acesta este un test."] Salut Alice! Răspund la mesajul tău.
+[30.09.2026 13:36:48] <Alice> [FIȘIER: test_upload_7474470755837050013.txt (73 B)]
+[30.09.2026 13:36:48] <SISTEM> Alice a părăsit camera.
+[30.09.2026 13:36:49] <SISTEM> Bob a părăsit camera.
+[30.09.2026 13:38:00] <SISTEM> Student_634 s-a alăturat camerei.
+[30.09.2026 13:38:00] <SISTEM> Student_634 a părăsit camera.
