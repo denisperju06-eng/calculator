@@ -339,7 +339,7 @@ void ruleaza_date_manual() {
     vector<float> lista_celsius = citeste_lista_floats();
     vector<float> lista_fahrenheit = conversie_grade_recursiv(lista_celsius, lista_celsius.size());
     cout << "Grade in Fahrenheit: ";
-    afiseaza_floats_recursiv(lista_fahrenheit, 0);
+    afiseaza_floats_recursiv(lista_fahrenheit, 0);  
     cout << endl;
 
     
