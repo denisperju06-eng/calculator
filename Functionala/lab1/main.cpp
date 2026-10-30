@@ -147,6 +147,18 @@ vector<float> conversie_grade_recursiv(vector<float> celsius, int n)
     return rezultat;
 }
 
+// 2.e Sarcina aditionala.
+vector<float> conversie_grade_iterativ(vector<float> celsius)
+{
+    vector<float> rezultat;
+    for (float temp : celsius)
+    {
+        float fahrenheit = temp * 1.8f + 32.0f;
+        rezultat.push_back(fahrenheit);
+    }
+    return rezultat;
+}
+
 // ====================================================================
 // 3. FUNCTII PENTRU LUCRUL CU LISTE
 // ====================================================================
